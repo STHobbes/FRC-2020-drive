@@ -24,7 +24,7 @@ public class DriveSubsystem extends SubsystemBase {
   public TalonSRX rm3 = new TalonSRX(Constants.MotorControllers.DRIVE_RIGHT_SLAVE_2);
   public TalonSRX leftMaster = new TalonSRX(Constants.MotorControllers.DRIVE_LEFT_MASTER);
   public TalonSRX lm2 = new TalonSRX(Constants.MotorControllers.DRIVE_LEFT_SLAVE_1);
-  public TalonSRX lm3 = new TalonSRX(Constants.MotorControllers.DRIVE_LEFT_SLAVE_1);
+  public TalonSRX lm3 = new TalonSRX(Constants.MotorControllers.DRIVE_LEFT_SLAVE_2);
 
   /**
    * Creates a new DriveSubsystem.
