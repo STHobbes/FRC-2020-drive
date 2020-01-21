@@ -11,12 +11,14 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class DriveSubsystem extends SubsystemBase {
-  //    public Solenoid shifter = Constants.ENABLE_DRIVE_SHIFT ? new Solenoid(RobotMap.shifter) : null;
+
+  public Solenoid shifter = new Solenoid(Constants.Pneumatics.DRIVE_SHIFTER);
   public TalonSRX rightMaster = new TalonSRX(Constants.MotorControllers.DRIVE_RIGHT_MASTER);
   public TalonSRX rm2 = new TalonSRX(Constants.MotorControllers.DRIVE_RIGHT_SLAVE_1);
   public TalonSRX rm3 = new TalonSRX(Constants.MotorControllers.DRIVE_RIGHT_SLAVE_2);
