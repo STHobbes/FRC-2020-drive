@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.*;
+import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -29,12 +29,11 @@ public class RobotContainer {
   // - the joystick and buttons
   private final Joystick m_stick = new Joystick(0);
 
-  private final JoystickButton m_trigger = new JoystickButton(this.m_stick, 1);
-  private final JoystickButton m_thumb = new JoystickButton(this.m_stick, 2);
-  private final JoystickButton m_topLL = new JoystickButton(this.m_stick, 3);
-  private final JoystickButton m_topLR = new JoystickButton(this.m_stick, 4);
-  private final JoystickButton m_topUL = new JoystickButton(this.m_stick, 5);
-  private final JoystickButton m_topUR = new JoystickButton(this.m_stick, 6);
+  private final JoystickButton m_sideButton = new JoystickButton(this.m_stick, 2);
+  private final JoystickButton m_button3 = new JoystickButton(this.m_stick, 3);
+  private final JoystickButton m_button4 = new JoystickButton(this.m_stick, 4);
+  private final JoystickButton m_button5 = new JoystickButton(this.m_stick, 5);
+  private final JoystickButton m_button6 = new JoystickButton(this.m_stick, 6);
   private final JoystickButton m_button7 = new JoystickButton(this.m_stick, 7);
   private final JoystickButton m_button8 = new JoystickButton(this.m_stick, 8);
   private final JoystickButton m_button9 = new JoystickButton(this.m_stick, 9);
@@ -66,18 +65,6 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    m_topUL.whileHeld(new BumpDriveGain(0.01));
-    m_topLL.whileHeld(new BumpDriveGain(-0.01));
-    m_topUR.whileHeld(new BumpTurnGain(0.01));
-    m_topLR.whileHeld(new BumpTurnGain(-0.01));
-
-    m_button7.whileHeld(new BumpTurnAtSpeedGain(-0.01));
-    m_button8.whileHeld(new BumpTurnAtSpeedGain(0.01));
-    m_button9.whileHeld(new BumpSensitivity(-0.05));
-    m_button10.whileHeld(new BumpSensitivity(0.05));
-    m_button11.whileHeld(new BumpDeadband(-0.005));
-    m_button12.whileHeld(new BumpDeadband(0.005));
-
   }
 
 
