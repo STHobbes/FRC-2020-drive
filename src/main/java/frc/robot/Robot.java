@@ -23,19 +23,6 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  void displayDriveParameters() {
-    SmartDashboard.putString("DB/String 0", String.format("speed gain:  %4.3f", Constants.DRIVE_FORWARD_GAIN));
-    SmartDashboard.putString("DB/String 1", String.format("turn gain:   %4.3f", Constants.DRIVE_TURN_GAIN));
-    SmartDashboard.putString("DB/String 2", String.format("tas gain:    %4.3f", Constants.DRIVE_TURN_AT_SPEED_GAIN));
-    SmartDashboard.putString("DB/String 3", String.format("sensitivity: %4.3f", Constants.DRIVE_SENSITIVITY));
-    SmartDashboard.putString("DB/String 4", String.format("dead-band:   %4.3f", Constants.DRIVE_DEADBAND));
-    SmartDashboard.putString("DB/String 5", String.format("turn bias:   %4.3f", Constants.DRIVE_TURN_BIAS));
-    SmartDashboard.putString("DB/String 6", String.format("right posn:  %9.1f",
-            m_robotContainer.getDrive().getRightPosition()));
-    SmartDashboard.putString("DB/String 7", String.format("left posn:   %9.1f",
-            m_robotContainer.getDrive().getLeftPosition()));
-  }
-
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -59,7 +46,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    displayDriveParameters();
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
@@ -76,7 +62,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    displayDriveParameters();
   }
 
   /**
