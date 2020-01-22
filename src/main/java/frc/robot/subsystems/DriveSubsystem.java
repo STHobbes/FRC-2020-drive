@@ -82,6 +82,12 @@ public class DriveSubsystem extends SubsystemBase {
     lm2.setNeutralMode(mode);
     lm3.setNeutralMode(mode);
   }
+  public double getLeftPosition() {
+    return leftMaster.getSelectedSensorPosition();
+  }
 
+  public double getRightPosition() {
+    return rightMaster.getSelectedSensorPosition();
+  }
 
 }
