@@ -38,8 +38,8 @@ public class DriveCommand extends CommandBase {
     // get stick values and set the signs to match the arcade drive forward,rotate conventions
     double stickY = -m_stick.getY();
     double twist = -m_stick.getTwist();
-//    double bias = m_stick.getThrottle();
-//    Constants.DRIVE_TURN_BIAS = bias;
+    double bias = m_stick.getThrottle();
+    Constants.DRIVE_TURN_BIAS = .25 * bias;
     // subtract the dead band and scale what is left outside the dead band
     double ySignMult = (stickY > 0.0) ? 1.0 : -1.0;
     double twistSignMult = (twist > 0.0) ? 1.0 : -1.0;
@@ -52,8 +52,9 @@ public class DriveCommand extends CommandBase {
     useTwist = Math.pow(useTwist, Constants.DRIVE_SENSITIVITY);
     // apply the gains
     double forward = useY * Constants.DRIVE_FORWARD_GAIN * ySignMult;
-    double rotate = ((useTwist * Constants.DRIVE_TURN_GAIN) -
-            (useY * (Constants.DRIVE_TURN_GAIN - Constants.DRIVE_TURN_AT_SPEED_GAIN))) * twistSignMult;
+    double rotate = m_stick.getRawButton(2) ? 0.0 :
+            ((useTwist * Constants.DRIVE_TURN_GAIN) -
+              (useY * (Constants.DRIVE_TURN_GAIN - Constants.DRIVE_TURN_AT_SPEED_GAIN))) * twistSignMult;
     // Now set the speeds
     m_driveSubsystem.setArcadePower(forward, rotate);
   }
