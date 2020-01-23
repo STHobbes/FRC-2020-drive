@@ -81,5 +81,24 @@ public class DriveSubsystem extends SubsystemBase {
     lm3.setNeutralMode(mode);
   }
 
+  public double getRightPosition() {
+    return rightMaster.getSelectedSensorPosition();
+  }
 
+  public double getLeftPosition() {
+    return leftMaster.getSelectedSensorPosition();
+  }
+
+  public void resetEncoders() {
+    rightMaster.setSelectedSensorPosition(0, 0, 10);
+    leftMaster.setSelectedSensorPosition(0, 0, 10);
+  }
+
+  public double getRightSpeed() {
+    return rightMaster.getSelectedSensorVelocity();
+  }
+
+  public double getLeftSpeed() {
+    return leftMaster.getSelectedSensorVelocity();
+  }
 }
