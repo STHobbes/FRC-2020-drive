@@ -9,11 +9,13 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.SetDriveCamera;
+import frc.robot.commands.SetVisionCamera;
+import frc.robot.subsystems.Limelight;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -24,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+  private final Limelight m_limelight = new Limelight();
 
   // The driver station buttons
   // - the joystick and buttons
@@ -44,7 +47,9 @@ public class RobotContainer {
   // The robot's commands
   private final DriveCommand m_driveCommand = new DriveCommand(m_driveSubsystem, m_stick);
 
-
+  // Commands
+  private final SetDriveCamera m_setDriveCamera = new SetDriveCamera(m_limelight);
+  private final SetVisionCamera m_setVisionCamera = new SetVisionCamera(m_limelight);
 
 
 
@@ -61,7 +66,7 @@ public class RobotContainer {
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
+   * edu.wpi.first.wpilibj.Joystick}, and then passing it to a
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
@@ -75,5 +80,9 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return null;
+  }
+
+  public Limelight getLimelight() {
+    return m_limelight;
   }
 }
