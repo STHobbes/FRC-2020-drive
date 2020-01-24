@@ -9,7 +9,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
 
@@ -39,6 +38,7 @@ public class DriveCommand extends CommandBase {
     // get stick values and set the signs to match the arcade drive forward,rotate conventions
     double stickY = -m_stick.getY();
     double twist = -m_stick.getTwist();
+    Constants.DRIVE_TURN_BIAS = .25 * m_stick.getThrottle();
     // subtract the dead band and scale what is left outside the dead band
     double ySignMult = (stickY > 0.0) ? 1.0 : -1.0;
     double twistSignMult = (twist > 0.0) ? 1.0 : -1.0;
@@ -51,9 +51,9 @@ public class DriveCommand extends CommandBase {
     useTwist = Math.pow(useTwist, Constants.DRIVE_SENSITIVITY);
     // apply the gains
     double forward = useY * Constants.DRIVE_FORWARD_GAIN * ySignMult;
-    double rotate = useTwist * Constants.DRIVE_TURN_GAIN * twistSignMult;
+    double rotate = m_stick.getRawButton(2) ? 0.0 : (useTwist * Constants.DRIVE_TURN_GAIN * twistSignMult);
     // Now set the speeds
-    m_driveSubsystem.setArcadePower(forward, rotate);
+    m_driveSubsystem.setArcadeSpeed(forward, rotate);
   }
 
   // Called once the command ends or is interrupted.

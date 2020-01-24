@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Limelight;
+import frc.robot.Constants;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -31,10 +32,23 @@ public class Robot extends TimedRobot {
   }
 
   private void useTelemetry() {
-    /* dashboardTelemetry(0, "target", m_limelight.isTarget()); // 0 means no target, 1 means target acquired
+    /* Camera Telemetry
+    dashboardTelemetry(0, "target", m_limelight.isTarget()); // 0 means no target, 1 means target acquired
     dashboardTelemetry(1, "x", m_limelight.getX()); // horizontal distance from cursor
     dashboardTelemetry(2, "y", m_limelight.getArea()); // vertical distance from cursor
     dashboardTelemetry(3, "area", m_limelight.getArea()); // area of target */
+
+    // Drive Telemetry
+    dashboardTelemetry(0, "target right", m_robotContainer.getDrive().getTargetRightSpeed());
+    dashboardTelemetry(5, "target left", m_robotContainer.getDrive().getTargetLeftSpeed());
+    dashboardTelemetry(1, "right speed", m_robotContainer.getDrive().getRightSpeed());
+    dashboardTelemetry(6, "left speed", m_robotContainer.getDrive().getLeftSpeed());
+    dashboardTelemetry(2, "right encoder", m_robotContainer.getDrive().getRightPosition());
+    dashboardTelemetry(7, "left encoder", m_robotContainer.getDrive().getLeftPosition());
+    dashboardTelemetry(3, "kP", Constants.DRIVE_KP);
+    dashboardTelemetry(8, "kI", Constants.DRIVE_KI);
+    dashboardTelemetry(4, "kF", Constants.DRIVE_KF);
+    dashboardTelemetry(9, "turn bias", Constants.DRIVE_TURN_BIAS);
   }
 
   /**

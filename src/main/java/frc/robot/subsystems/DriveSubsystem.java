@@ -16,6 +16,10 @@ import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class DriveSubsystem extends SubsystemBase {
+
+  private double targetLeftSpeed;
+  private double targetRightSpeed;
+
   //    public Solenoid shifter = Constants.ENABLE_DRIVE_SHIFT ? new Solenoid(RobotMap.shifter) : null;
   public TalonSRX rightMaster = new TalonSRX(Constants.MotorControllers.DRIVE_RIGHT_MASTER);
   public TalonSRX rm2 = new TalonSRX(Constants.MotorControllers.DRIVE_RIGHT_SLAVE_1);
@@ -49,6 +53,20 @@ public class DriveSubsystem extends SubsystemBase {
     rightMaster.setInverted(InvertType.InvertMotorOutput);
     rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    rightMaster.config_kP(0, Constants.DRIVE_KP);
+    rightMaster.config_kI(0, Constants.DRIVE_KI);
+    rightMaster.config_IntegralZone(0, (int)(Constants.INTEGRAL_ZONE * Constants.MAX_SPEED));
+    rightMaster.config_kD(0, 0);
+    rightMaster.config_kF(0, Constants.DRIVE_KF);
+    rightMaster.setSensorPhase(false);
+    leftMaster.config_kP(0, Constants.DRIVE_KP);
+    leftMaster.config_kI(0, Constants.DRIVE_KI);
+    leftMaster.config_IntegralZone(0, (int)(Constants.INTEGRAL_ZONE * Constants.MAX_SPEED));
+    leftMaster.config_kD(0, 0);
+    leftMaster.config_kF(0, Constants.DRIVE_KF);
+    leftMaster.setSensorPhase(false);
+    // reset encoders
+    resetEncoders();
   }
 
   @Override
@@ -69,6 +87,27 @@ public class DriveSubsystem extends SubsystemBase {
     double scale = (max <= 1.0) ? 1.0 : (1.0 / max);
     rightMaster.set(ControlMode.PercentOutput, scale * (forward + (rotate + (forward * Constants.DRIVE_TURN_BIAS))));
     leftMaster.set(ControlMode.PercentOutput, scale * (forward - (rotate + (forward * Constants.DRIVE_TURN_BIAS))));
+  }
+
+  public void setArcadeSpeed(double forward, double turn) {
+
+    double max = Math.abs(forward) + Math.abs(turn);
+    double scale = (max <= 1.0) ? 1.0 : (1.0 / max);
+
+    rightMaster.config_kP(0, Constants.DRIVE_KP);
+    leftMaster.config_kP(0, Constants.DRIVE_KP);
+    rightMaster.config_kI(0, Constants.DRIVE_KI);
+    leftMaster.config_kI(0, Constants.DRIVE_KI);
+    rightMaster.config_IntegralZone(0, (int)(Constants.INTEGRAL_ZONE * Constants.MAX_SPEED));
+    leftMaster.config_IntegralZone(0, (int)(Constants.INTEGRAL_ZONE * Constants.MAX_SPEED));
+    rightMaster.config_kF(0, Constants.DRIVE_KF);
+    leftMaster.config_kF(0, Constants.DRIVE_KF);
+
+    targetRightSpeed = scale * (forward + (turn + (forward * Constants.DRIVE_TURN_BIAS))) * Constants.MAX_SPEED;
+    targetLeftSpeed = scale * (forward - (turn + (forward * Constants.DRIVE_TURN_BIAS))) * Constants.MAX_SPEED;
+    
+    rightMaster.set(ControlMode.Velocity, targetRightSpeed);
+    leftMaster.set(ControlMode.Velocity, targetLeftSpeed);
   }
 
   public void setNeutralMode(NeutralMode mode) {
@@ -100,5 +139,18 @@ public class DriveSubsystem extends SubsystemBase {
 
   public double getLeftSpeed() {
     return leftMaster.getSelectedSensorVelocity();
+  }
+
+  public double getTargetRightSpeed() {
+    return targetRightSpeed;
+  }
+
+  public double getTargetLeftSpeed() {
+    return targetLeftSpeed;
+  }
+
+  public void resetIntegral() {
+    rightMaster.setIntegralAccumulator(0);
+    leftMaster.setIntegralAccumulator(0);
   }
 }

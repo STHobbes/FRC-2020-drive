@@ -10,6 +10,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AdjustkF;
+import frc.robot.commands.AdjustkI;
+import frc.robot.commands.AdjustkP;
 import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -70,6 +73,12 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    m_button7.whenPressed(new AdjustkP(0.1));
+    m_button8.whenPressed(new AdjustkP(-0.1));
+    m_button9.whenPressed(new AdjustkI(0.001, m_driveSubsystem));
+    m_button10.whenPressed(new AdjustkI(-0.001, m_driveSubsystem));
+    m_button11.whenPressed(new AdjustkF(0.1));
+    m_button12.whenPressed(new AdjustkF(-0.1));
   }
 
 
@@ -84,5 +93,9 @@ public class RobotContainer {
 
   public Limelight getLimelight() {
     return m_limelight;
+  }
+
+  public DriveSubsystem getDrive() {
+    return m_driveSubsystem;
   }
 }
