@@ -56,7 +56,7 @@ public final class Constants {
     // The correction for the tendency of the robot to systemically turn as power is applied to the drive. This
     // tendency to turn can result from many factors - alignment, friction, motor differences, controller
     // differences, etc.
-    public static double DRIVE_TURN_BIAS = 0.025;
+    public static double DRIVE_TURN_BIAS = 0.0;
 
     // A stick value scaling factor when you enter the fine control mode.
     public static double FINE_CONTROL_MAX = 0.2;

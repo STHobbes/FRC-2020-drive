@@ -100,11 +100,11 @@ public class DriveSubsystem extends SubsystemBase {
     leftMaster.config_kI(0, Constants.DRIVE_KI);
     rightMaster.config_IntegralZone(0, (int)(Constants.INTEGRAL_ZONE * Constants.MAX_SPEED));
     leftMaster.config_IntegralZone(0, (int)(Constants.INTEGRAL_ZONE * Constants.MAX_SPEED));
-    rightMaster.config_kF(0, Constants.DRIVE_KF);
-    leftMaster.config_kF(0, Constants.DRIVE_KF);
+    rightMaster.config_kF(0, Constants.DRIVE_KF * (1.0 + Constants.DRIVE_TURN_BIAS));
+    leftMaster.config_kF(0, Constants.DRIVE_KF * (1.0 - Constants.DRIVE_TURN_BIAS));
 
-    targetRightSpeed = scale * (forward + (turn + (forward * Constants.DRIVE_TURN_BIAS))) * Constants.MAX_SPEED;
-    targetLeftSpeed = scale * (forward - (turn + (forward * Constants.DRIVE_TURN_BIAS))) * Constants.MAX_SPEED;
+    targetRightSpeed = scale * (forward + turn) * Constants.MAX_SPEED;
+    targetLeftSpeed = scale * (forward - turn)  * Constants.MAX_SPEED;
     
     rightMaster.set(ControlMode.Velocity, targetRightSpeed);
     leftMaster.set(ControlMode.Velocity, targetLeftSpeed);

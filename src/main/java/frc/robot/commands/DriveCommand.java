@@ -38,7 +38,7 @@ public class DriveCommand extends CommandBase {
     // get stick values and set the signs to match the arcade drive forward,rotate conventions
     double stickY = -m_stick.getY();
     double twist = -m_stick.getTwist();
-    Constants.DRIVE_TURN_BIAS = .25 * m_stick.getThrottle();
+    Constants.DRIVE_TURN_BIAS = .1 * m_stick.getThrottle();
     // subtract the dead band and scale what is left outside the dead band
     double ySignMult = (stickY > 0.0) ? 1.0 : -1.0;
     double twistSignMult = (twist > 0.0) ? 1.0 : -1.0;
