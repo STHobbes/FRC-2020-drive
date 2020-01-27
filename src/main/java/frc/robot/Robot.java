@@ -38,15 +38,14 @@ public class Robot extends TimedRobot {
     dashboardTelemetry(0, "robot", Constants.ROBOT.ROBOT_NAME);
     dashboardTelemetry(5, "twist", Constants.DRIVE_USE_TWIST);
 
-    dashboardTelemetry(1, "speed gain", Constants.DRIVE_FORWARD_GAIN);
-    dashboardTelemetry(6, "speed senstvty", Constants.DRIVE_SENSITIVITY);
-    dashboardTelemetry(7, "speed deadbnd", Constants.DRIVE_DEADBAND);
+    dashboardTelemetry(1, "speed gain", Constants.DRIVE_SPEED_GAIN);
+    dashboardTelemetry(6, "speed senstvty", Constants.DRIVE_SPEED_SENSITIVITY);
+    dashboardTelemetry(7, "speed deadband", Constants.DRIVE_SPEED_DEADBAND);
 
-    dashboardTelemetry(3, "turn gain", Constants.DRIVE_FORWARD_GAIN);
+    dashboardTelemetry(3, "turn gain", Constants.DRIVE_SPEED_GAIN);
     dashboardTelemetry(8, "turn senstvty", Constants.DRIVE_TURN_SENSITIVITY);
     dashboardTelemetry(4, "turn@speed gain", Constants.DRIVE_TURN_AT_SPEED_GAIN);
-    dashboardTelemetry(9, "turn deadbnd", Constants.DRIVE_TURN_DEADBAND);
-
+    dashboardTelemetry(9, "turn deadband", Constants.DRIVE_TURN_DEADBAND);
   }
 
   /**
@@ -55,7 +54,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+    // Instantiate our RobotContainer. This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     // empty the telemetry display

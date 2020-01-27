@@ -10,14 +10,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 
-public class BumpDriveGain extends CommandBase {
+public class BumpSpeedGain extends CommandBase {
 
   final double m_inc;
 
   /**
    * Creates a new BumpDriveGain.
    */
-  public BumpDriveGain(double inc) {
+  public BumpSpeedGain(double inc) {
     m_inc = inc;
   }
 
@@ -29,11 +29,11 @@ public class BumpDriveGain extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Constants.DRIVE_FORWARD_GAIN += m_inc;
-    if (Constants.DRIVE_FORWARD_GAIN > 1.0) {
-      Constants.DRIVE_FORWARD_GAIN = 1.0;
-    } else if (Constants.DRIVE_FORWARD_GAIN < 0.1) {
-      Constants.DRIVE_FORWARD_GAIN = 0.1;
+    Constants.DRIVE_SPEED_GAIN += m_inc;
+    if (Constants.DRIVE_SPEED_GAIN > 1.0) {
+      Constants.DRIVE_SPEED_GAIN = 1.0;
+    } else if (Constants.DRIVE_SPEED_GAIN < 0.1) {
+      Constants.DRIVE_SPEED_GAIN = 0.1;
     }
   }
 

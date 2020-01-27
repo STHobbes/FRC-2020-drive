@@ -10,13 +10,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 
-public class BumpSensitivity extends CommandBase {
+public class BumpSpeedDeadband extends CommandBase {
 
   final double m_inc;
   /**
-   * Creates a new BumpSensitivity.
+   * Creates a new BumpDeadband.
    */
-  public BumpSensitivity(double inc) {
+  public BumpSpeedDeadband(double inc) {
     m_inc = inc;
   }
 
@@ -28,11 +28,11 @@ public class BumpSensitivity extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Constants.DRIVE_SENSITIVITY += m_inc;
-    if (Constants.DRIVE_SENSITIVITY > 3.0) {
-      Constants.DRIVE_SENSITIVITY = 3.0;
-    } else if (Constants.DRIVE_SENSITIVITY < 1.0) {
-      Constants.DRIVE_SENSITIVITY = 1.0;
+    Constants.DRIVE_SPEED_DEADBAND += m_inc;
+    if (Constants.DRIVE_SPEED_DEADBAND > 0.1) {
+      Constants.DRIVE_SPEED_DEADBAND = 0.1;
+    } else if (Constants.DRIVE_SPEED_DEADBAND < 0.0) {
+      Constants.DRIVE_SPEED_DEADBAND = 0.0;
     }
   }
 

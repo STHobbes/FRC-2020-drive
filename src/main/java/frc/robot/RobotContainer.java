@@ -43,8 +43,14 @@ public class RobotContainer {
   private final JoystickButton m_button11 = new JoystickButton(this.m_stick, 11);
   private final JoystickButton m_button12 = new JoystickButton(this.m_stick, 12);
 
-  private final POVButton m_pov_0 = new POVButton(this.m_stick, 0);
-  private final POVButton m_pov_180 = new POVButton(this.m_stick, 180);
+  private final POVButton m_pov_up = new POVButton(this.m_stick, 0);
+  private final POVButton m_pov_UR = new POVButton(this.m_stick, 45);
+  private final POVButton m_pov_right = new POVButton(this.m_stick, 90);
+  private final POVButton m_pov_DR = new POVButton(this.m_stick, 135);
+  private final POVButton m_pov_down = new POVButton(this.m_stick, 180);
+  private final POVButton m_pov_DL = new POVButton(this.m_stick, 225);
+  private final POVButton m_pov_left = new POVButton(this.m_stick, 270);
+  private final POVButton m_pov_UL = new POVButton(this.m_stick, 315);
 
   // - the xbox controller and buttons
   private final XboxController m_xbox = new XboxController(1);
@@ -78,22 +84,30 @@ public class RobotContainer {
   private void configureButtonBindings() {
     xboxA.whenPressed(new SetNextRobot(this));
 
-    m_topUL.whileHeld(new BumpDriveGain(0.01));
-    m_topLL.whileHeld(new BumpDriveGain(-0.01));
-    m_topUR.whileHeld(new BumpTurnGain(0.01));
-    m_topLR.whileHeld(new BumpTurnGain(-0.01));
+    // Use stick twist or left-right for turn
+    m_trigger.whenPressed(new ToggleUseTwist());
 
-    m_button7.whileHeld(new BumpTurnAtSpeedGain(-0.01));
-    m_button8.whileHeld(new BumpTurnAtSpeedGain(0.01));
-    m_button9.whileHeld(new BumpSensitivity(-0.05));
-    m_button10.whileHeld(new BumpSensitivity(0.05));
-    m_button11.whileHeld(new BumpDeadband(-0.005));
-    m_button12.whileHeld(new BumpDeadband(0.005));
+    // setting gain - these are all on the hat.
+    m_pov_up.whileHeld(new BumpSpeedGain(0.01));
+    m_pov_down.whileHeld(new BumpSpeedGain(-0.01));
+    m_pov_right.whileHeld(new BumpTurnGain(0.01));
+    m_pov_left.whileHeld(new BumpTurnGain(-0.01));
+    m_pov_UR.whileHeld(new BumpTurnAtSpeedGain(0.01));
+    m_pov_UL.whileHeld(new BumpTurnAtSpeedGain(0.01));
+    m_pov_DR.whileHeld(new BumpTurnAtSpeedGain(-0.01));
+    m_pov_DL.whileHeld(new BumpTurnAtSpeedGain(-0.01));
 
-    m_pov_0.whileHeld(new BumpDeadband(0.005));
-    m_pov_180.whileHeld(new BumpDeadband(-0.005));
+    // setting sensitivity - there are on the upper stick buttons
+    m_topUL.whileHeld(new BumpSpeedSensitivity(0.05));
+    m_topLL.whileHeld(new BumpSpeedSensitivity(-0.05));
+    m_topUR.whileHeld(new BumpTurnSensitivity(0.05));
+    m_topLR.whileHeld(new BumpTurnSensitivity(-0.05));
 
-
+    // Other stuff - deadband
+    m_button7.whileHeld(new BumpSpeedDeadband(-0.005));
+    m_button8.whileHeld(new BumpSpeedDeadband(0.005));
+    m_button9.whileHeld(new BumpTurnDeadband(-0.005));
+    m_button10.whileHeld(new BumpTurnDeadband(-0.005));
   }
 
   public void resetRobot() {

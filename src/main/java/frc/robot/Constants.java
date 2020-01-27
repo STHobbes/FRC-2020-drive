@@ -38,7 +38,7 @@ public final class Constants {
     // Conditioning stick values - constants used in the 2019 for stick tuning
 
     // The multiplier for full stick to give the power/speed requested from the drive.
-    public static double DRIVE_FORWARD_GAIN = 1.0;
+    public static double DRIVE_SPEED_GAIN = 1.0;
 
     // The multiplier for full twist to give the power/speed differential requested from the drive.
     public static double DRIVE_TURN_GAIN = 0.5;
@@ -48,18 +48,15 @@ public final class Constants {
 
     // The center-stick sensitivity, which is really the exponent applied to the stick position to flatten drive
     // response to stick position for greater sensitivity at low speed.
-    public static double DRIVE_SENSITIVITY = 2.0;
+    public static double DRIVE_SPEED_SENSITIVITY = 2.0;
 
     public static double DRIVE_TURN_SENSITIVITY = 3.0;
 
     // The width of the 0 dead-band of the stick as a fraction of full stick movement.
-    public static double DRIVE_DEADBAND = 0.05;
+    public static double DRIVE_SPEED_DEADBAND = 0.05;
+
     public static double DRIVE_TURN_DEADBAND = 0.05;
 
-    // The correction for the tendency of the robot to systemically turn as power is applied to the drive. This
-    // tendency to turn can result from many factors - alignment, friction, motor differences, controller
-    // differences, etc.
-    public static double DRIVE_TURN_BIAS = 0.0;
 
     public static boolean DRIVE_USE_TWIST = true;
 
