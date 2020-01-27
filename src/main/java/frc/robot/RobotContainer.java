@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -42,17 +43,26 @@ public class RobotContainer {
   private final JoystickButton m_button11 = new JoystickButton(this.m_stick, 11);
   private final JoystickButton m_button12 = new JoystickButton(this.m_stick, 12);
 
+  private final POVButton m_pov_0 = new POVButton(this.m_stick, 0);
+  private final POVButton m_pov_180 = new POVButton(this.m_stick, 180);
+
+  // - the xbox controller and buttons
+  private final XboxController m_xbox = new XboxController(1);
+  private final JoystickButton xboxY = new JoystickButton(m_xbox, 1);
+  private final JoystickButton xboxA = new JoystickButton(m_xbox, 2);
+  private final JoystickButton xboxB = new JoystickButton(m_xbox, 3);
+  private final JoystickButton xboxX = new JoystickButton(m_xbox, 4);
+
   // The robot's commands
   private final DriveCommand m_driveCommand = new DriveCommand(m_driveSubsystem, m_stick);
-
-
-
 
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    // perform robot and driver initializations
+    m_driveSubsystem.setRobot();
     // Set the default commands for subsystems
     m_driveSubsystem.setDefaultCommand(m_driveCommand);
     // Configure the button bindings
@@ -66,6 +76,8 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    xboxA.whenPressed(new SetNextRobot(this));
+
     m_topUL.whileHeld(new BumpDriveGain(0.01));
     m_topLL.whileHeld(new BumpDriveGain(-0.01));
     m_topUR.whileHeld(new BumpTurnGain(0.01));
@@ -78,8 +90,15 @@ public class RobotContainer {
     m_button11.whileHeld(new BumpDeadband(-0.005));
     m_button12.whileHeld(new BumpDeadband(0.005));
 
+    m_pov_0.whileHeld(new BumpDeadband(0.005));
+    m_pov_180.whileHeld(new BumpDeadband(-0.005));
+
+
   }
 
+  public void resetRobot() {
+    m_driveSubsystem.setRobot();
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

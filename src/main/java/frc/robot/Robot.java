@@ -23,17 +23,30 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
+  private void dashboardTelemetry(int port, String key, double var) {
+    SmartDashboard.putString(String.format("DB/String %d", port), String.format("%s: %4.3f", key, var));
+  }
+  private void dashboardTelemetry(int port, String key, String var) {
+    SmartDashboard.putString(String.format("DB/String %d", port), String.format("%s: %s", key, var));
+  }
+  private void dashboardTelemetry(int port, String key, boolean var) {
+    SmartDashboard.putString(String.format("DB/String %d", port),
+            String.format("%s: %s", key, var ? "on" : "off" ));
+  }
+
   void displayDriveParameters() {
-    SmartDashboard.putString("DB/String 0", String.format("speed gain:  %4.3f", Constants.DRIVE_FORWARD_GAIN));
-    SmartDashboard.putString("DB/String 1", String.format("turn gain:   %4.3f", Constants.DRIVE_TURN_GAIN));
-    SmartDashboard.putString("DB/String 2", String.format("tas gain:    %4.3f", Constants.DRIVE_TURN_AT_SPEED_GAIN));
-    SmartDashboard.putString("DB/String 3", String.format("sensitivity: %4.3f", Constants.DRIVE_SENSITIVITY));
-    SmartDashboard.putString("DB/String 4", String.format("dead-band:   %4.3f", Constants.DRIVE_DEADBAND));
-    SmartDashboard.putString("DB/String 5", String.format("turn bias:   %4.3f", Constants.DRIVE_TURN_BIAS));
-    SmartDashboard.putString("DB/String 6", String.format("right posn:  %9.1f",
-            m_robotContainer.getDrive().getRightPosition()));
-    SmartDashboard.putString("DB/String 7", String.format("left posn:   %9.1f",
-            m_robotContainer.getDrive().getLeftPosition()));
+    dashboardTelemetry(0, "robot", Constants.ROBOT.ROBOT_NAME);
+    dashboardTelemetry(5, "twist", Constants.DRIVE_USE_TWIST);
+
+    dashboardTelemetry(1, "speed gain", Constants.DRIVE_FORWARD_GAIN);
+    dashboardTelemetry(6, "speed senstvty", Constants.DRIVE_SENSITIVITY);
+    dashboardTelemetry(7, "speed deadbnd", Constants.DRIVE_DEADBAND);
+
+    dashboardTelemetry(3, "turn gain", Constants.DRIVE_FORWARD_GAIN);
+    dashboardTelemetry(8, "turn senstvty", Constants.DRIVE_TURN_SENSITIVITY);
+    dashboardTelemetry(4, "turn@speed gain", Constants.DRIVE_TURN_AT_SPEED_GAIN);
+    dashboardTelemetry(9, "turn deadbnd", Constants.DRIVE_TURN_DEADBAND);
+
   }
 
   /**
@@ -45,6 +58,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    // empty the telemetry display
     for (int i = 0; i < 10; i++) {
       SmartDashboard.putString(String.format("DB/String %d",i), " ");
     }

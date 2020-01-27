@@ -50,30 +50,67 @@ public final class Constants {
     // response to stick position for greater sensitivity at low speed.
     public static double DRIVE_SENSITIVITY = 2.0;
 
+    public static double DRIVE_TURN_SENSITIVITY = 3.0;
+
     // The width of the 0 dead-band of the stick as a fraction of full stick movement.
     public static double DRIVE_DEADBAND = 0.05;
+    public static double DRIVE_TURN_DEADBAND = 0.05;
 
     // The correction for the tendency of the robot to systemically turn as power is applied to the drive. This
     // tendency to turn can result from many factors - alignment, friction, motor differences, controller
     // differences, etc.
     public static double DRIVE_TURN_BIAS = 0.0;
 
-    // A stick value scaling factor when you enter the fine control mode.
-    public static double FINE_CONTROL_MAX = 0.2;
+    public static boolean DRIVE_USE_TWIST = true;
 
     // -----------------------------------------------------------------------------------------------------------------------------
-    // Tuning speed Drive tuning (using encoders and the Talon SRX PID control) - from 2019 summer sessions
+    // Robot Configurations
+    // -----------------------------------------------------------------------------------------------------------------------------
+    // We have a competition robot and a test robot. It is unclear which parts of the competition will be reproduced on the test
+    // robot. We do know that right now the test robot is available for driver practice and tuning. This is an enumeration of our
+    //  robots and the characteristics specific to each.
+    //
+    // - Tuning speed Drive tuning (using encoders and the Talon SRX PID control) - from 2019 summer sessions
+    //   - We have noted that each 2-speed 3-wheel drive has different characteristics (motor, assembly, drag, belt tensioning,
+    //     etc.) that gives them a different performance character.  The DRIVE_TURN_BIAS is the performance difference between
+    //     the left and right drive trains of the robot.
+    //   - Kf -
+    //   - Kp -
+    //   - Ki -
+    //   - integral_zone -
+    public enum Robots {
+        COMPETITION_ROBOT("competition", 0.0, 4.5, 2.5, 0.0, 0.0, 230.0),
+        PRACTICE_ROBOT("practice", 0.019, 4.5, 2.5, 0.0, 0.0, 230.0);
 
-    public static double DRIVE_KP = 2.0;
+        // The robot configuration that is running.
+        public final String ROBOT_NAME;
+        public final double DRIVE_TURN_BIAS;
+        // The
+        public final double DRIVE_Kf;
+        public final double DRIVE_Kp;
+        public final double DRIVE_Ki;
+        public final double DRIVE_INTEGRAL_ZONE;
+        public final double DRIVE_MAX_RPM;
+        Robots(String name, double bias, double Kf, double Kp, double Ki, double integral_zone, double max_rpm) {
+            ROBOT_NAME = name;
+            DRIVE_TURN_BIAS = bias;
+            DRIVE_Kf = Kf;
+            DRIVE_Kp = Kp;
+            DRIVE_Ki = Ki;
+            DRIVE_INTEGRAL_ZONE = integral_zone;
+            DRIVE_MAX_RPM = max_rpm;
+        }
 
-    public static double DRIVE_KI = 0.003;
+        public static Robots getNextRobot(Robots robot) {
+            int index = robot.ordinal();
+            int nextIndex = index + 1;
+            Robots[] robots = Robots.values();
+            nextIndex %= robots.length;
+            return robots[nextIndex];
+        }
+    }
 
-    public static double DRIVE_KF = 4.0;
-
-    public static double INTEGRAL_ZONE = 0.0;
-
-    // MAX_SPEED of motors for SpeedDrive
-    public static final double MAX_SPEED = 230;
+    public static Robots ROBOT = Robots.PRACTICE_ROBOT;
 
     // -----------------------------------------------------------------------------------------------------------------------------
     // Tuning IMU control of direction (heading)
