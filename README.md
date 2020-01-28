@@ -6,7 +6,37 @@ tuning parameters. At the end of a session the the *best drive* parameters are r
 and the software is modified to start with those settings. **REMEMBER TO RECORD YOUR FAVORITE SETTINGS SO WE
 CAN UPDATE THE PROGRAMMED DEFAULTS FOR THE COMPETITION SOFTWARE, DIFFERENT DRIVERS CAN HAVE DIFFERENT SETTINGS.**
 
+## Using this Program
+
+This program helps a driver set robot response to the control stick motions to match his/her expected response to
+those control motions. This response profile is saved, and can be instantly loaded into the competition robot so
+the driver always gets the expected response from the robot. The basic thing is that you drive this program and tune
+settings until you feel most comfortable driving the robot - write you idea settings down - and then we make this your
+driving profile for competition.
+
+When the program is first loaded and initialized, there is a reasonable set of defaults for most drivers (i.e. the behaviour
+of the robot will not be too stupid). We think this is the best strategy for tuning:
+* Use stick twist or stick X (side-to-side) for turn - depends on the games you play and controllers you use. Try them both
+  and pick one for the rest of the tuning.
+* Start with speed gain, turn gain, and drive at speed gain (all on the) little hat (POV control) on the top of the control
+  stick.
+  * **Speed Gain** is, by default, set to 1.0 resulting in the fastest speed the robot can achieve when the stick is full
+    forward or full back.
+  * **Turn Gain** is, by default, set to 0.5 resulting in about half the fastest turn rate possible when you are turning
+    without forward motion. The robot can spin really fast - tune this to what you are comfortable with.
+  * **Turn at Speed Gain** is, by default, set to 0.1. This is the amout of the maximum possible turn rate that you
+    can get with the robot running full speed. Test by going straight at full speed and  the applying maximum turn
+    while you are still going full speed. If the robot turns, skids, and falls over; the gain is too high. If the robot does
+    not turn as much as you expect, the gain is too low.
+* Hext, adjust sensitivity. Higher sensitivity means you have more fine control around the centered stick.
+* Next, adjust deadband. A higher deadband means you can have a little more uninteded pressure on the stick before the robot
+  reacts. For example, if you want to mve full speed ahead and you have no deadband, then you will constantly adjusting for
+  little turn signals you have inadvertently applied. A little beadband filters out those unintended turns.
+  
+**PLEASE REMEMBER TO RECORD YOUR IDEAL SETTINGS AND REPORT THEM TO THE PROGRAMMING TEAM SO YOUR PROFILE CAN BE UPDATED.**
+    
 ## Drive Tuning Controls
+
 We use the main joystick for driving. All other buttons are mapped to changing drive parameters, so a single
 driver can control everything from one stick.
 
