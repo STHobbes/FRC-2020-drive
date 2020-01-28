@@ -14,24 +14,27 @@ the driver always gets the expected response from the robot. The basic thing is 
 settings until you feel most comfortable driving the robot - write you idea settings down - and then we make this your
 driving profile for competition.
 
-When the program is first loaded and initialized, there is a reasonable set of defaults for most drivers (i.e. the behaviour
-of the robot will not be too stupid). We think this is the best strategy for tuning:
-* Use stick twist or stick X (side-to-side) for turn - depends on the games you play and controllers you use. Try them both
-  and pick one for the rest of the tuning.
-* Start with speed gain, turn gain, and drive at speed gain (all on the) little hat (POV control) on the top of the control
-  stick.
-  * **Speed Gain** is, by default, set to 1.0 resulting in the fastest speed the robot can achieve when the stick is full
-    forward or full back.
-  * **Turn Gain** is, by default, set to 0.5 resulting in about half the fastest turn rate possible when you are turning
-    without forward motion. The robot can spin really fast - tune this to what you are comfortable with.
-  * **Turn at Speed Gain** is, by default, set to 0.1. This is the amout of the maximum possible turn rate that you
+When the program is first loaded and initialized, there is a reasonable set of defaults for most drivers (i.e. the
+behaviour of the robot will not be too stupid). We think this is the best strategy for tuning (see the next section
+for the mapping between drive parameters and the controls that modify them):
+* Use stick twist or stick X (side-to-side) for turn - depends on the games you play and controllers you use. Try
+  them both
+  and pick the one you like best for the rest of the tuning.
+* Start with speed gain, turn gain, and drive at speed gain (all on the) little hat (POV control) on the top of
+  the control stick.
+  * **Speed Gain** is, by default, set to 1.0 resulting in the fastest speed the robot can achieve when the stick
+    is full forward or full back.
+  * **Turn Gain** is, by default, set to 0.5 resulting in about half the fastest turn rate possible when you are
+    turning without forward motion. The robot can spin really fast - tune this to what you are comfortable with.
+  * **Turn at Speed Gain** is, by default, set to 0.1. This is the amount of the maximum possible turn rate that you
     can get with the robot running full speed. Test by going straight at full speed and  the applying maximum turn
-    while you are still going full speed. If the robot turns, skids, and falls over; the gain is too high. If the robot does
-    not turn as much as you expect, the gain is too low.
-* Hext, adjust sensitivity. Higher sensitivity means you have more fine control around the centered stick.
-* Next, adjust deadband. A higher deadband means you can have a little more uninteded pressure on the stick before the robot
-  reacts. For example, if you want to mve full speed ahead and you have no deadband, then you will constantly adjusting for
-  little turn signals you have inadvertently applied. A little beadband filters out those unintended turns.
+    while you are still going full speed. If the robot turns, skids, and falls over; the gain is too high. If the
+    robot does  not turn as much as you expect, the gain is too low.
+* Next, adjust **sensitivity**. Higher sensitivity means you have more fine control around the centered stick.
+* Next, adjust **deadband**. A higher deadband means you can have a little more unintended pressure on
+  the stick before the robot reacts. For example, if you want to mve full speed ahead and you have no deadband,
+  then you will constantly adjusting for little turn signals you have inadvertently applied. A little deadband
+  filters out those unintended turns.
   
 **PLEASE REMEMBER TO RECORD YOUR IDEAL SETTINGS AND REPORT THEM TO THE PROGRAMMING TEAM SO YOUR PROFILE CAN BE UPDATED.**
     
@@ -50,7 +53,8 @@ The current control mappings:
   * **shifting:** - there is not shifting yet.
   * **turn by twist or side-to-side:** - The trigger toggles between turn by twist or side-to-side. 
   * **speed gain:** - POV(hat) forward/backward - adjusts the maximum speed. `speed gain:` in
-    the parameter display - range: 0.1 (almost no forward speed at full stick) to 1.0 (fastest speed possible at full stick).
+    the parameter display - range: 0.1 (almost no forward speed at full stick) to 1.0 (fastest speed
+    possible at full stick).
   * **turn gain:** - POV(hat) right/left - adjusts the maximum turn rate when the robot has no forward/backward
     speed. `turn gain:` in the parameter display - range: 0.1 (almost no turn at full twist) to 1.0 (fastest turn
     possible at full twist).
