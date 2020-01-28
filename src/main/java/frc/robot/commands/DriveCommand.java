@@ -39,7 +39,7 @@ public class DriveCommand extends CommandBase {
     double stickSpeed = -m_stick.getY();
     double stickTurn = Constants.DRIVE_USE_TWIST ? -m_stick.getTwist(): -m_stick.getX();
     // subtract the dead band and scale what is left outside the dead band
-    double sppedSignMult = (stickSpeed > 0.0) ? 1.0 : -1.0;
+    double speedSignMult = (stickSpeed > 0.0) ? 1.0 : -1.0;
     double turnSignMult = (stickTurn > 0.0) ? 1.0 : -1.0;
     double useSpeed = (Math.abs(stickSpeed) <= Constants.DRIVE_SPEED_DEADBAND) ? 0.0 :
             (Math.abs(stickSpeed) - Constants.DRIVE_SPEED_DEADBAND) / (1.0 - Constants.DRIVE_SPEED_DEADBAND);
@@ -49,7 +49,7 @@ public class DriveCommand extends CommandBase {
     useSpeed = Math.pow(useSpeed, Constants.DRIVE_SPEED_SENSITIVITY);
     useTurn = Math.pow(useTurn, Constants.DRIVE_TURN_SENSITIVITY);
     // apply the gains
-    double forward = useSpeed * Constants.DRIVE_SPEED_GAIN * sppedSignMult;
+    double forward = useSpeed * Constants.DRIVE_SPEED_GAIN * speedSignMult;
     double turn = m_stick.getRawButton(2) ? 0.0 : (useTurn * turnSignMult *
             (Constants.DRIVE_TURN_GAIN + (useSpeed * (Constants.DRIVE_TURN_AT_SPEED_GAIN - Constants.DRIVE_TURN_GAIN))));
 

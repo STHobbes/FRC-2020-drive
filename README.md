@@ -35,7 +35,7 @@ The current control mappings:
   * **turn sensitivity at center** - buttons 4 & 6 (top of stick to the left) - give you more/less sensitivity at slow
     turn rates. `turn senstvty:` in the
     display - range: 1.0 (linear stick position to speed) to 3.0 (way more sensitivity at center).
-  * **speed dead band** - button 7 & 8 -  - how much the speed stick can move before power is applied. This is helpful in
+  * **speed dead band** - button 11 & 12 - how much the speed stick can move before power is applied. This is helpful in
     making sa little inadvertent speed movement of the stick does not also result in unwanted
     rotation. `speed deadband:` in the display - range: 0 (no deadband) to 0.1 (need to move
     10% of the stick/twist range before power is applied)

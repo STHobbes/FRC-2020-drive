@@ -104,10 +104,10 @@ public class RobotContainer {
     m_topLR.whileHeld(new BumpTurnSensitivity(-0.05));
 
     // Other stuff - deadband
-    m_button7.whileHeld(new BumpSpeedDeadband(-0.005));
-    m_button8.whileHeld(new BumpSpeedDeadband(0.005));
+    m_button11.whileHeld(new BumpSpeedDeadband(-0.005));
+    m_button12.whileHeld(new BumpSpeedDeadband(0.005));
     m_button9.whileHeld(new BumpTurnDeadband(-0.005));
-    m_button10.whileHeld(new BumpTurnDeadband(-0.005));
+    m_button10.whileHeld(new BumpTurnDeadband(0.005));
   }
 
   public void resetRobot() {

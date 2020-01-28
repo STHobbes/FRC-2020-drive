@@ -42,7 +42,7 @@ public class Robot extends TimedRobot {
     dashboardTelemetry(6, "speed senstvty", Constants.DRIVE_SPEED_SENSITIVITY);
     dashboardTelemetry(7, "speed deadband", Constants.DRIVE_SPEED_DEADBAND);
 
-    dashboardTelemetry(3, "turn gain", Constants.DRIVE_SPEED_GAIN);
+    dashboardTelemetry(3, "turn gain", Constants.DRIVE_TURN_GAIN);
     dashboardTelemetry(8, "turn senstvty", Constants.DRIVE_TURN_SENSITIVITY);
     dashboardTelemetry(4, "turn@speed gain", Constants.DRIVE_TURN_AT_SPEED_GAIN);
     dashboardTelemetry(9, "turn deadband", Constants.DRIVE_TURN_DEADBAND);
