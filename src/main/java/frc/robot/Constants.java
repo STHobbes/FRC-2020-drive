@@ -27,7 +27,9 @@ public final class Constants {
                 DRIVE_RIGHT_SLAVE_2 = 3,
                 DRIVE_LEFT_MASTER = 4,
                 DRIVE_LEFT_SLAVE_1 = 5,
-                DRIVE_LEFT_SLAVE_2 = 6;
+                DRIVE_LEFT_SLAVE_2 = 6,
+                COLLECTOR_POSITION = 7,
+                COLLECTOR_SWEEPER = 8;
     }
 
     public static final class Pneumatics {
