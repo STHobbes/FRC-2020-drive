@@ -32,12 +32,6 @@ public class Robot extends TimedRobot {
   }
 
   private void useTelemetry() {
-    /* Camera Telemetry
-    dashboardTelemetry(0, "target", m_limelight.isTarget()); // 0 means no target, 1 means target acquired
-    dashboardTelemetry(1, "x", m_limelight.getX()); // horizontal distance from cursor
-    dashboardTelemetry(2, "y", m_limelight.getArea()); // vertical distance from cursor
-    dashboardTelemetry(3, "area", m_limelight.getArea()); // area of target */
-
     // Drive Telemetry
     dashboardTelemetry(0, "target right", m_robotContainer.getDrive().getTargetRightSpeed());
     dashboardTelemetry(5, "target left", m_robotContainer.getDrive().getTargetLeftSpeed());

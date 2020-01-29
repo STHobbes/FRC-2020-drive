@@ -49,7 +49,7 @@ public class DriveSubsystem extends SubsystemBase {
     rm3.setInverted(InvertType.FollowMaster);
     lm2.setInverted(InvertType.FollowMaster);
     lm3.setInverted(InvertType.FollowMaster);
-    setNeutralMode(NeutralMode.Brake);
+    setNeutralMode(NeutralMode.Coast);
     rightMaster.setInverted(InvertType.InvertMotorOutput);
     rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);

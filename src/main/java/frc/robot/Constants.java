@@ -58,9 +58,6 @@ public final class Constants {
     // differences, etc.
     public static double DRIVE_TURN_BIAS = 0.0;
 
-    // A stick value scaling factor when you enter the fine control mode.
-    public static double FINE_CONTROL_MAX = 0.2;
-
     // -----------------------------------------------------------------------------------------------------------------------------
     // Tuning speed Drive tuning (using encoders and the Talon SRX PID control) - from 2019 summer sessions
 
