@@ -11,8 +11,8 @@ CAN UPDATE THE PROGRAMMED DEFAULTS FOR THE COMPETITION SOFTWARE, DIFFERENT DRIVE
 This program helps a driver set robot response to the control stick motions to match his/her expected response to
 those control motions. This response profile is saved, and can be instantly loaded into the competition robot so
 the driver always gets the expected response from the robot. The basic thing is that you drive this program and tune
-settings until you feel most comfortable driving the robot - write you idea settings down - and then we make this your
-driving profile for competition.
+settings until you feel most comfortable driving the robot - write you ideal settings down, and email them to the
+programming team - and then we make this your driving profile for competition.
 
 When the program is first loaded and initialized, there is a reasonable set of defaults for most drivers (i.e. the
 behaviour of the robot will not be too stupid). We think this is the best strategy for tuning (see the next section
