@@ -41,6 +41,7 @@ public class Robot extends TimedRobot {
 
     dashboardTelemetry(0, "robot", Constants.ROBOT.ROBOT_NAME);
     dashboardTelemetry(5, "driver", Constants.DRIVER.DRIVER_NAME);
+    dashboardTelemetry(2, "sweeper", m_robotContainer.getStick().getThrottle());
   }
 
   /**

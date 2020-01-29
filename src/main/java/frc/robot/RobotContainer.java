@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.DriveSubsystem;
@@ -57,7 +58,6 @@ public class RobotContainer {
   private final SetDriveCamera m_setDriveCamera = new SetDriveCamera(m_limelight);
   private final SetVisionCamera m_setVisionCamera = new SetVisionCamera(m_limelight);
 
-
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -68,6 +68,8 @@ public class RobotContainer {
     m_driveSubsystem.setDefaultCommand(m_driveCommand);
     // Configure the button bindings
     configureButtonBindings();
+    // Schedule the run sweeper command
+    CommandScheduler.getInstance().schedule(new RunSweeper(m_stick));
   }
 
   /**
@@ -100,5 +102,9 @@ public class RobotContainer {
 
   public Limelight getLimelight() {
     return m_limelight;
+  }
+
+  public Joystick getStick() {
+    return m_stick;
   }
 }
