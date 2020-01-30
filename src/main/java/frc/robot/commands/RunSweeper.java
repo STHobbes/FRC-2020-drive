@@ -20,24 +20,28 @@ public class RunSweeper extends CommandBase {
      */
     public RunSweeper(Joystick joyStick) {
         m_stick = joyStick;
+        m_sweeper.configFactoryDefault();
+        m_sweeper.setNeutralMode(NeutralMode.Brake);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        m_sweeper.configFactoryDefault();
-        m_sweeper.setNeutralMode(NeutralMode.Brake);
+        System.out.println("RunSweeper.initialize");
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        System.out.println("RunSweeper.execute");
         m_sweeper.set(ControlMode.PercentOutput,m_stick.getThrottle());
     }
 
+    public double getPower() { return m_sweeper.getMotorOutputPercent(); }
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        System.out.println("RunSweeper.end");
         m_sweeper.set(ControlMode.PercentOutput,0.0);
     }
 

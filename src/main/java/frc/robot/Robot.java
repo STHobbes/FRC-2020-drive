@@ -42,6 +42,7 @@ public class Robot extends TimedRobot {
     dashboardTelemetry(0, "robot", Constants.ROBOT.ROBOT_NAME);
     dashboardTelemetry(5, "driver", Constants.DRIVER.DRIVER_NAME);
     dashboardTelemetry(2, "sweeper", m_robotContainer.getStick().getThrottle());
+    dashboardTelemetry(3, "talon", m_robotContainer.getRunSweeper().getPower());
   }
 
   /**
@@ -69,6 +70,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    // THIS IS BAD !!!!!! DON"T EVER DO THIS !!!! DON'T KNOW WHY THIS IS NOT SCHEDULING!!
+    m_robotContainer.getRunSweeper().execute();
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic

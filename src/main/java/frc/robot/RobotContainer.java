@@ -25,7 +25,7 @@ import frc.robot.subsystems.Limelight;
  */
 public class RobotContainer {
   // The robot's subsystems
-  private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+//  private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final Limelight m_limelight = new Limelight();
 
   // The driver station buttons
@@ -52,24 +52,25 @@ public class RobotContainer {
   private final JoystickButton xboxX = new JoystickButton(m_xbox, 4);
 
   // The robot's commands
-  private final DriveCommand m_driveCommand = new DriveCommand(m_driveSubsystem, m_stick);
+//  private final DriveCommand m_driveCommand = new DriveCommand(m_driveSubsystem, m_stick);
 
   // Commands
   private final SetDriveCamera m_setDriveCamera = new SetDriveCamera(m_limelight);
   private final SetVisionCamera m_setVisionCamera = new SetVisionCamera(m_limelight);
+  private final RunSweeper m_runSweeper = new RunSweeper(m_stick);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // perform robot and driver initializations
-    m_driveSubsystem.setRobot();
+//    m_driveSubsystem.setRobot();
     // Set the default commands for subsystems
-    m_driveSubsystem.setDefaultCommand(m_driveCommand);
+//    m_driveSubsystem.setDefaultCommand(m_driveCommand);
     // Configure the button bindings
     configureButtonBindings();
     // Schedule the run sweeper command
-    CommandScheduler.getInstance().schedule(new RunSweeper(m_stick));
+    m_runSweeper.schedule();
   }
 
   /**
@@ -84,7 +85,8 @@ public class RobotContainer {
   }
 
   public void resetRobot() {
-    m_driveSubsystem.setRobot();
+
+//    m_driveSubsystem.setRobot();
   }
 
   public void resetDriver() {
@@ -107,4 +109,6 @@ public class RobotContainer {
   public Joystick getStick() {
     return m_stick;
   }
+
+  public RunSweeper getRunSweeper() { return m_runSweeper; }
 }
