@@ -23,12 +23,13 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  
+
   private Limelight m_limelight;
 
   private void dashboardTelemetry(int port, String key, double var) {
     SmartDashboard.putString(String.format("DB/String %d", port), String.format("%s: %4.3f", key, var));
   }
+
   private void dashboardTelemetry(int port, String key, String var) {
     SmartDashboard.putString(String.format("DB/String %d", port), String.format("%s: %s", key, var));
   }
@@ -54,7 +55,7 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     // empty the telemetry display
     for (int i = 0; i < 10; i++) {
-      SmartDashboard.putString(String.format("DB/String %d",i), " ");
+      SmartDashboard.putString(String.format("DB/String %d", i), " ");
     }
     m_limelight = m_robotContainer.getLimelight();
   }

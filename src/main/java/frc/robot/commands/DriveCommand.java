@@ -42,17 +42,17 @@ public class DriveCommand extends CommandBase {
     double speedSignMult = (stickSpeed > 0.0) ? 1.0 : -1.0;
     double turnSignMult = (stickTurn > 0.0) ? 1.0 : -1.0;
     double useSpeed = (Math.abs(stickSpeed) <= Constants.DRIVER.DRIVE_SPEED_DEADBAND) ? 0.0 :
-            (Math.abs(stickSpeed) - Constants.DRIVER.DRIVE_SPEED_DEADBAND) / (1.0 - Constants.DRIVER.DRIVE_SPEED_DEADBAND);
+        (Math.abs(stickSpeed) - Constants.DRIVER.DRIVE_SPEED_DEADBAND) / (1.0 - Constants.DRIVER.DRIVE_SPEED_DEADBAND);
     double useTurn = (Math.abs(stickTurn) <= Constants.DRIVER.DRIVE_TURN_DEADBAND) ? 0.0 :
-            (Math.abs(stickTurn) - Constants.DRIVER.DRIVE_TURN_DEADBAND) / (1.0 - Constants.DRIVER.DRIVE_TURN_DEADBAND);
+        (Math.abs(stickTurn) - Constants.DRIVER.DRIVE_TURN_DEADBAND) / (1.0 - Constants.DRIVER.DRIVE_TURN_DEADBAND);
     // do the sensitivity power function
     useSpeed = Math.pow(useSpeed, Constants.DRIVER.DRIVE_SPEED_SENSITIVITY);
     useTurn = Math.pow(useTurn, Constants.DRIVER.DRIVE_TURN_SENSITIVITY);
     // apply the gains
     double forward = useSpeed * speedSignMult * Constants.DRIVER.DRIVE_SPEED_GAIN;
     double rotate = useTurn * turnSignMult *
-            (Constants.DRIVER.DRIVE_TURN_GAIN +
-                    (useSpeed * (Constants.DRIVER.DRIVE_TURN_AT_SPEED_GAIN - Constants.DRIVER.DRIVE_TURN_GAIN)));
+        (Constants.DRIVER.DRIVE_TURN_GAIN +
+            (useSpeed * (Constants.DRIVER.DRIVE_TURN_AT_SPEED_GAIN - Constants.DRIVER.DRIVE_TURN_GAIN)));
     // Now set the speeds
     m_driveSubsystem.setArcadeSpeed(forward, rotate);
   }
