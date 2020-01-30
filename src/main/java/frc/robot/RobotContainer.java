@@ -27,6 +27,7 @@ public class RobotContainer {
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final Limelight m_limelight = new Limelight();
 
+  private final NavX n_navx = NavX.getInstance();
   // The driver station buttons
   // - the joystick and buttons
   private final Joystick m_stick = new Joystick(0);
