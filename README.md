@@ -5,9 +5,16 @@ tested, ask Aden or Henry to merge it.***
 
 ## Which Robot, Which Driver
 
+This section describes how we can tune the code to different robots (i.e. tune to the differences between the *practice* and
+*competition* robots); to different drivers (programmers, builder, and drivers): and how we set the robot and driver
+at competition. 
+
 ### Robot Tuning
 
+Every robot is a little bit different - we need to calibrate our software to the robot.
+
 ### Driver Tuning
+Every driver comes with a different set of gaming baggage - we need to calibrate our software to the driver.
 
 
 ## Drive Subsystem Details
@@ -22,11 +29,23 @@ If the NavX fails (we've had that), we use encoders only for autonomous move/tur
 
 ### Driver Control
 
+
+
 #### Arcade by Power
 
 #### Arcade by Speed
 
 ### NavX for Inertial Guidance
+
+#### Initialization Failure
+
+#### NavX failure during competition
+
+### Autonomous Driving
+
+#### NavX failure
+
+#### Encoder Failure
 
 
 

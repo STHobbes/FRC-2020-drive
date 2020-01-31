@@ -16,7 +16,10 @@ public class SetNextRobot extends CommandBase {
   private RobotContainer m_container;
 
   /**
-   * Creates a new IncrementRobot.
+   * Creates a new SetNextRobot command. This command steps through the robot configurations in {@link Constants.Robots} with
+   * wrap-around so a driver can select the configuration for the robot they are driving.
+   *
+   * @param container The container for all the robot subsystems, command, sensors, and driver controls.
    */
   public SetNextRobot(RobotContainer container) {
     m_container = container;

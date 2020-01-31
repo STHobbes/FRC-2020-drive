@@ -150,10 +150,11 @@ gradle-app.setting
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
 
-# Ides Specific Config and build
+# Idea Specific Config and build
 .gradle/
 .idea/
 build/
+javadocs/
 
 # # VS Code Specific Java Settings
 .classpath

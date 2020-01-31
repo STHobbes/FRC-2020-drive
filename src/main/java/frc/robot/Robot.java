@@ -24,24 +24,57 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  private Limelight m_limelight;
-
+  /**
+   *  Display a double value on the smart dashboard telemetry panel.
+   *
+   * @param port The index where the string should appear in the dashboard.
+   * @param key The keyword(s) describing what the value is.
+   * @param var The value to be displayed.
+   */
+  @SuppressWarnings("unused")
   private void dashboardTelemetry(int port, String key, double var) {
     SmartDashboard.putString(String.format("DB/String %d", port), String.format("%s: %4.3f", key, var));
   }
 
+  /**
+   *  Display a string value on the smart dashboard telemetry panel.
+   *
+   * @param port The index where the string should appear in the dashboard.
+   * @param key The keyword(s) describing what the value is.
+   * @param var The value to be displayed.
+   */
+  @SuppressWarnings("unused")
   private void dashboardTelemetry(int port, String key, String var) {
     SmartDashboard.putString(String.format("DB/String %d", port), String.format("%s: %s", key, var));
   }
 
+  /**
+   *  Display a boolean value on the smart dashboard telemetry panel as either 'on' ({@code true}) or
+   *  'off' ({@code false}).
+   *
+   * @param port The index where the string should appear in the dashboard.
+   * @param key The keyword(s) describing what the value is.
+   * @param var The value to be displayed.
+   */
+  @SuppressWarnings("unused")
+  private void dashboardTelemetry(int port, String key, boolean var) {
+    SmartDashboard.putString(String.format("DB/String %d", port),
+        String.format("%s: %s", key, var ? "on" : "off" ));
+  }
+  /**
+   * This method displays the telemetry for the robot. It is run during both enabled and disabled modes, so it is very useful
+   * if you want to get sensor feedback while the robot is disabled. Please put your driver team (and builder/programmer)
+   * feedback printouts here so they are handled uniformly with all other driver team (and builder/programmer) feedback.
+   */
   private void useTelemetry() {
-    /* dashboardTelemetry(0, "target", m_limelight.isTarget()); // 0 means no target, 1 means target acquired
-    dashboardTelemetry(1, "x", m_limelight.getX()); // horizontal distance from cursor
-    dashboardTelemetry(2, "y", m_limelight.getArea()); // vertical distance from cursor
-    dashboardTelemetry(3, "area", m_limelight.getArea()); // area of target */
-
     dashboardTelemetry(0, "robot", Constants.ROBOT.ROBOT_NAME);
     dashboardTelemetry(5, "driver", Constants.DRIVER.DRIVER_NAME);
+
+    NavX.NavInfo navInfo = m_robotContainer.getNavX().getNavInfo();
+    dashboardTelemetry(2, "pitch", navInfo.pitch);
+    dashboardTelemetry(3, "yaw", navInfo.yaw);
+    dashboardTelemetry(4, "roll", navInfo.roll);
+
   }
 
   /**
@@ -57,7 +90,6 @@ public class Robot extends TimedRobot {
     for (int i = 0; i < 10; i++) {
       SmartDashboard.putString(String.format("DB/String %d", i), " ");
     }
-    m_limelight = m_robotContainer.getLimelight();
   }
 
   /**

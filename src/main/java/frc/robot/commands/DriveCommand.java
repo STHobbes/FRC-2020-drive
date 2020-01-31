@@ -18,7 +18,10 @@ public class DriveCommand extends CommandBase {
   private final DriveSubsystem m_driveSubsystem;
 
   /**
-   * Creates a new Drive.
+   * Instantiate a new drive command. This constructor injects the drive subsystem and joystick dependencies.
+   *
+   * @param driveSubsystem The drive subsystem.
+   * @param joyStick The joystick.
    */
   public DriveCommand(DriveSubsystem driveSubsystem, Joystick joyStick) {
     m_driveSubsystem = driveSubsystem;

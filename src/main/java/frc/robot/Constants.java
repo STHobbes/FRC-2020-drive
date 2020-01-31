@@ -26,8 +26,12 @@ public final class Constants {
   // -----------------------------------------------------------------------------------------------------------------------------
   // Driver Configurations
   // -----------------------------------------------------------------------------------------------------------------------------
-  // Conditioning stick values - constants used in the 2019 for stick tuning. We found that it was important for each
-  // driver to tune the drive for their driving style so the
+
+  /**
+   * Conditioning stick values - constants used in the 2019 for stick tuning. We found that it was important for each
+   * driver to tune the drive for their driving style so this is an enumeration of drivers and their drive preferences.
+   * Additional information may be added if we find there are other parameters the drivers want to be able to control.
+   */
   public enum Drivers {
     ADEN("Aden", true, 1.0, 0.5, 0.1, 2.0, 3.0, 0.05, 0.05),
     LUCAS("Lucas", true, 1.0, 0.5, 0.1, 2.0, 3.0, 0.05, 0.05),
@@ -113,6 +117,16 @@ public final class Constants {
     public final double DRIVE_INTEGRAL_ZONE;
     public final double DRIVE_MAX_RPM;
 
+    /**
+     *
+     * @param name The name that will be displayed as the robot configuration.
+     * @param bias The bias for trhis configuration
+     * @param Kf The drive Kf for the PID controlling this robot.
+     * @param Kp The drive Kp for the PID controlling this robot.
+     * @param Ki The drive Ki for the PID controlling this robot, normally 0.0
+     * @param integral_zone The drive integral zone for the PID controlling this robot, normally 0.0
+     * @param max_rpm The maximum wheel speed, RPM, for the drive.
+     */
     Robots(String name, double bias, double Kf, double Kp, double Ki, double integral_zone, double max_rpm) {
       ROBOT_NAME = name;
       DRIVE_TURN_BIAS = bias;

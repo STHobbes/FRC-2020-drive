@@ -16,7 +16,10 @@ public class SetNextDriver extends CommandBase {
   private RobotContainer m_container;
 
   /**
-   * Creates a new IncrementDriver.
+   * Creates a new SetNextDriver command. This command steps through the driver configurations in {@link Constants.Drivers} with
+   * wrap-around so a driver can select thier ideal driving profile when they are driving.
+   *
+   * @param container The container for all the robot subsystems, command, sensors, and driver controls.
    */
   public SetNextDriver(RobotContainer container) {
     m_container = container;
