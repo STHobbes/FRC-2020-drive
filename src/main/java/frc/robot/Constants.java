@@ -18,15 +18,8 @@ package frc.robot;
 public final class Constants {
 
   // -----------------------------------------------------------------------------------------------------------------------------
-  // Physical Mappings - where are motors, pneumatics, sensors, and servos connected to the electronics
-
-  public static Drivers DRIVER = Drivers.ADEN;
-  public static Robots ROBOT = Robots.PRACTICE_ROBOT;
-
-  // -----------------------------------------------------------------------------------------------------------------------------
   // Driver Configurations
   // -----------------------------------------------------------------------------------------------------------------------------
-
   /**
    * Conditioning stick values - constants used in the 2019 for stick tuning. We found that it was important for each
    * driver to tune the drive for their driving style so this is an enumeration of drivers and their drive preferences.
@@ -88,6 +81,8 @@ public final class Constants {
     }
   }
 
+  public static Drivers DRIVER = Drivers.ADEN;
+
   // -----------------------------------------------------------------------------------------------------------------------------
   // Robot Configurations
   // -----------------------------------------------------------------------------------------------------------------------------
@@ -103,6 +98,11 @@ public final class Constants {
   //   - Kp -
   //   - Ki -
   //   - integral_zone -
+
+  /**
+   * The enumeration of robots that we are running this code on. Each robot has different performance characteristics that
+   * we quantify in this enumeration.
+   */
   public enum Robots {
     COMPETITION_ROBOT("competition", 0.0, 4.5, 2.5, 0.0, 0.0, 230.0),
     PRACTICE_ROBOT("practice", 0.019, 4.5, 2.5, 0.0, 0.0, 230.0);
@@ -118,14 +118,13 @@ public final class Constants {
     public final double DRIVE_MAX_RPM;
 
     /**
-     *
-     * @param name The name that will be displayed as the robot configuration.
-     * @param bias The bias for trhis configuration
-     * @param Kf The drive Kf for the PID controlling this robot.
-     * @param Kp The drive Kp for the PID controlling this robot.
-     * @param Ki The drive Ki for the PID controlling this robot, normally 0.0
+     * @param name          The name that will be displayed as the robot configuration.
+     * @param bias          The bias for trhis configuration
+     * @param Kf            The drive Kf for the PID controlling this robot.
+     * @param Kp            The drive Kp for the PID controlling this robot.
+     * @param Ki            The drive Ki for the PID controlling this robot, normally 0.0
      * @param integral_zone The drive integral zone for the PID controlling this robot, normally 0.0
-     * @param max_rpm The maximum wheel speed, RPM, for the drive.
+     * @param max_rpm       The maximum wheel speed, RPM, for the drive.
      */
     Robots(String name, double bias, double Kf, double Kp, double Ki, double integral_zone, double max_rpm) {
       ROBOT_NAME = name;
@@ -146,6 +145,12 @@ public final class Constants {
     }
   }
 
+  public static Robots ROBOT = Robots.PRACTICE_ROBOT;
+
+
+  // -----------------------------------------------------------------------------------------------------------------------------
+  // Physical Mappings - where are motors, pneumatics, sensors, and servos connected to the electronics
+  // -----------------------------------------------------------------------------------------------------------------------------
   public static final class MotorControllers {
     public static int
         DRIVE_RIGHT_MASTER = 1,
@@ -161,7 +166,5 @@ public final class Constants {
 
   }
 
-  // -----------------------------------------------------------------------------------------------------------------------------
-  // Tuning IMU control of direction (heading)
 
 }
