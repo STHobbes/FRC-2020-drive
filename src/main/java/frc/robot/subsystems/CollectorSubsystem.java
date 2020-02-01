@@ -13,7 +13,7 @@ public class CollectorSubsystem extends SubsystemBase {
     private double m_positionPower;
     private TalonSRX m_sweeper = new TalonSRX(Constants.MotorControllers.COLLECTOR_SWEEPER);
     private double m_sweeperPower;
-    private double m_armEncoder;
+    
 
 
     /**
