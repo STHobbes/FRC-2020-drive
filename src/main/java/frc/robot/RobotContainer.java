@@ -28,6 +28,8 @@ public class RobotContainer {
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final CollectorSubsystem m_collectorSubsystem = CollectorSubsystem.getInstance();
   private final Limelight m_limelight = new Limelight();
+  private final CollectorSubsystem m_position = CollectorSubsystem.getInstance();
+
 
   // The driver station buttons
   // - the joystick and buttons
@@ -79,8 +81,10 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    xboxA.whenPressed(new SetNextRobot(this));
-    xboxB.whenPressed(new SetNextDriver(this));
+    // xboxA.whenPressed(new SetNextRobot(this));
+    //xboxB.whenPressed(new SetNextDriver(this));
+    m_button3.whenPressed(new RunArmToPosition(m_position, 1, 1000));
+  
   }
 
   public void resetRobot() {

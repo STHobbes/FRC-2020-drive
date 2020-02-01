@@ -13,6 +13,8 @@ public class CollectorSubsystem extends SubsystemBase {
     private double m_positionPower;
     private TalonSRX m_sweeper = new TalonSRX(Constants.MotorControllers.COLLECTOR_SWEEPER);
     private double m_sweeperPower;
+    private double m_armEncoder;
+
 
     /**
      * The Singleton instance of this CollectorSubsystem. External classes should
@@ -67,5 +69,14 @@ public class CollectorSubsystem extends SubsystemBase {
     public double getPositionPower() {
         return m_positionPower;
     }
+
+    public void resetPositionEncoder() {
+        m_position.setSelectedSensorPosition(0);
+    }
+
+    public double getPositionEncoder() {
+        return m_position.getSelectedSensorPosition();
+    }
+
 }
 

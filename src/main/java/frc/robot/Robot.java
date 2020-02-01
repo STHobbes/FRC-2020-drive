@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.CollectorSubsystem;
 import frc.robot.subsystems.Limelight;
 
 /**
@@ -24,6 +25,8 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
   
+  private CollectorSubsystem m_position;
+
   private Limelight m_limelight;
 
   private void dashboardTelemetry(int port, String key, double var) {
@@ -38,7 +41,7 @@ public class Robot extends TimedRobot {
     dashboardTelemetry(1, "x", m_limelight.getX()); // horizontal distance from cursor
     dashboardTelemetry(2, "y", m_limelight.getArea()); // vertical distance from cursor
     dashboardTelemetry(3, "area", m_limelight.getArea()); // area of target */
-
+    dashboardTelemetry(2, "armPositionEncoder", m_position.getPositionEncoder());
     dashboardTelemetry(0, "robot", Constants.ROBOT.ROBOT_NAME);
     dashboardTelemetry(5, "driver", Constants.DRIVER.DRIVER_NAME);
   }
