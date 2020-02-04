@@ -14,11 +14,13 @@ tuning sequence:
   * **Verify encoders are working** - push the stick forward. Verify that the wheels for left and right drive are turning
     forward. Verify there is an encoder reading for right and left and that it increases positively with forward stick. Note:
     on the driver console these are the `right encoder` and `left encoder` dashboard values.
-  * **Determine maximum speed (RPM)** - and reset `MAX_SPEED` constant in code. Advance the stick to full speed, record the
+  * **Determine maximum speed (RPM)** - and reset `MAX_SPEED` constant in code. Press the trigger to send full power to
+    both the right and left drive. Record the
     left and right maximum speeds and average them. These speeds are with no load on the drive train. Assume a real
-    load like 5&percent; when the robot is running, and multiply the max observed speeds (these are `left speed` and
-    `right speed` dashboard valus) by perhaps 0.95 and use that as the `MAX_SPEED` (we found 230 to be the best value
-    for the practice bot - if you are close to that, just move on to the next step).
+    load, like 5&percent, when the robot is running; and multiply the max observed speeds (these are `left speed` and
+    `right speed` dashboard values) by perhaps 0.95 and use that as the `MAX_SPEED` (we found 230 to be the best value
+    for the practice bot - **WITH A DRIVE ENCODER, NOT MOTOR ENCODER** if you are close to that, just move on to the next step).
+    Otherwise
   * **tune Kf** - this is the factor that is multiplied with requested speed to set the initial power to the drive. Hold
     the stick at about half speed and adjust Kf until the the actual speed is the same as the target speed (hold the thumb
     button while you do this to remove any turn)
@@ -30,6 +32,18 @@ tuning sequence:
   * **re-tune Kf** - now that the robot is off the blocks, drive it a little and observe how close the real speed is to
     the requested speed under load. Adjust Kf if necessary (it generally needs to be increased a bit).
   * **re-tune the bias** - If the robot is not driving straight, adjust the bias until it is going as straight as possible.
-  * reset Kp to 2.5 and things should be pretty good.
+  * reset Kp to 2.5 and things should be pretty good (this is a value we have previously tuned).
 
 ## Encoder Testing Controls
+
+The controls for tuning the encoders are minimal. This is what you can do:
+* **trigger** - Set the power to left and right to full power so you can assess the maximum speed of the drive.
+* **stick** - Forward-backward is speed forward-backward. Twist right-left is turn right-left.
+* **thumb** - the thumb button disables twist/turn. Use this when you are tuning bias so that you know you are getting
+  identical speed requests to the right and left drive trains.
+* **throttle** - adjust bias
+* **buttons 11 & 12** - adjust Kf
+* **buttons 9 & 10** - adjust Kf
+* **buttons 7 & 8** - adjust Ki. Although this can be adjusted, it seems like a bad idea for something like drive speed
+  that is constantly changing. Seems much more appropriate for something like an arm position you would want to hold the
+  arm steady at.

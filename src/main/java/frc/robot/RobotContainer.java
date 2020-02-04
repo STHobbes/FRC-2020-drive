@@ -10,14 +10,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.AdjustkF;
-import frc.robot.commands.AdjustkI;
-import frc.robot.commands.AdjustkP;
-import frc.robot.commands.DriveCommand;
+import frc.robot.commands.*;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.SetDriveCamera;
-import frc.robot.commands.SetVisionCamera;
 import frc.robot.subsystems.Limelight;
 
 /**
@@ -35,11 +30,12 @@ public class RobotContainer {
   // - the joystick and buttons
   private final Joystick m_stick = new Joystick(0);
 
-  private final JoystickButton m_sideButton = new JoystickButton(this.m_stick, 2);
-  private final JoystickButton m_button3 = new JoystickButton(this.m_stick, 3);
-  private final JoystickButton m_button4 = new JoystickButton(this.m_stick, 4);
-  private final JoystickButton m_button5 = new JoystickButton(this.m_stick, 5);
-  private final JoystickButton m_button6 = new JoystickButton(this.m_stick, 6);
+  private final JoystickButton m_trigger = new JoystickButton(this.m_stick, 1);
+  private final JoystickButton m_thumb = new JoystickButton(this.m_stick, 2);
+  private final JoystickButton m_topLL = new JoystickButton(this.m_stick, 3);
+  private final JoystickButton m_topLR = new JoystickButton(this.m_stick, 4);
+  private final JoystickButton m_topUL = new JoystickButton(this.m_stick, 5);
+  private final JoystickButton m_topUR = new JoystickButton(this.m_stick, 6);
   private final JoystickButton m_button7 = new JoystickButton(this.m_stick, 7);
   private final JoystickButton m_button8 = new JoystickButton(this.m_stick, 8);
   private final JoystickButton m_button9 = new JoystickButton(this.m_stick, 9);
@@ -73,12 +69,13 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    m_button7.whenPressed(new AdjustkP(0.1));
-    m_button8.whenPressed(new AdjustkP(-0.1));
-    m_button9.whenPressed(new AdjustkI(0.001, m_driveSubsystem));
-    m_button10.whenPressed(new AdjustkI(-0.001, m_driveSubsystem));
-    m_button11.whenPressed(new AdjustkF(0.1));
-    m_button12.whenPressed(new AdjustkF(-0.1));
+    m_trigger.whenPressed(new RunDriveAtMaxPower(m_driveSubsystem,m_stick));
+    m_button7.whenPressed(new AdjustkI(-0.001, m_driveSubsystem));
+    m_button8.whenPressed(new AdjustkI(0.001, m_driveSubsystem));
+    m_button9.whenPressed(new AdjustkP(-0.1));
+    m_button10.whenPressed(new AdjustkP(0.1));
+    m_button11.whenPressed(new AdjustkF(-0.1));
+    m_button12.whenPressed(new AdjustkF(0.1));
   }
 
 
