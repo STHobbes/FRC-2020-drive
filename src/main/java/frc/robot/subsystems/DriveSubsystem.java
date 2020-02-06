@@ -14,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.NavX;
 
 public class DriveSubsystem extends SubsystemBase {
 
@@ -27,6 +28,8 @@ public class DriveSubsystem extends SubsystemBase {
   private TalonSRX m_leftMaster = new TalonSRX(Constants.MotorControllers.DRIVE_LEFT_MASTER);
   private TalonSRX m_lm2 = new TalonSRX(Constants.MotorControllers.DRIVE_LEFT_SLAVE_1);
   private TalonSRX m_lm3 = new TalonSRX(Constants.MotorControllers.DRIVE_LEFT_SLAVE_2);
+
+  private NavX m_navx = NavX.getInstance();
 
   /**
    * Creates a new DriveSubsystem.
@@ -88,13 +91,26 @@ public class DriveSubsystem extends SubsystemBase {
    * Set the desired drive speed as a factor of maximum drive speed in the range 0 to 1 (0 to -1) where 0 is
    * stopped and 1 (-1) is the maximum forward (backward) speed that can be achieved by the drive.
    *
-   * @param forward (double) forward speed in the range -1.0 to 1.0 (negative is
-   *                backwards, positive is forward).
-   * @param rotate  (double) rotation speed in the range -1.0 to 1.0 (negative is
-   *                clockwise, positive is counter-clockwise).
+   * @param forward              (double) forward speed in the range -1.0 to 1.0 (negative is
+   *                             backwards, positive is forward).
+   * @param rotate               (double) rotation speed in the range -1.0 to 1.0 (negative is
+   *                             clockwise, positive is counter-clockwise).
+   * @param trackExpectedHeading (boolean) Set this to {@code true} when moving straight and wanting to track along
+   *                             the NavX expected heading; which is normally only for an autonomous forward/backward move
+   *                             or a driver move where no rotation is applied.
+   * @param setExpectedToCurrent (boolean) Set to {@code true} if the expected heading should be updated to the current heading;
+   *                             which is normally true only when there is a driver controlled rotation.
    */
-  public void setArcadeSpeed(double forward, double rotate) {
-
+  public void setArcadeSpeed(double forward, double rotate,
+                             boolean trackExpectedHeading, boolean setExpectedToCurrent) {
+    m_navx.recomputeHeading(setExpectedToCurrent);
+    if (trackExpectedHeading) {
+      NavX.HeadingInfo headingInfo = m_navx.getHeadingInfo();
+      if (null != headingInfo) {
+        // We really do have a working NavX, so incorporate it into keeping the robot moving in the correct direction.
+        rotate = Math.abs(forward) * Constants.ROBOT.DRIVE_HEADING_Kp * (headingInfo.expectedHeading - headingInfo.heading);
+      }
+    }
     double max = Math.abs(forward) + Math.abs(rotate);
     double scale = (max <= 1.0) ? 1.0 : (1.0 / max);
 

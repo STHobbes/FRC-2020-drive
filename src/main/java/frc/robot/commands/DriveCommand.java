@@ -10,10 +10,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.NavX;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class DriveCommand extends CommandBase {
 
+  private final NavX m_navx = NavX.getInstance();
   private final Joystick m_stick;
   private final DriveSubsystem m_driveSubsystem;
 
@@ -21,7 +23,7 @@ public class DriveCommand extends CommandBase {
    * Instantiate a new drive command. This constructor injects the drive subsystem and joystick dependencies.
    *
    * @param driveSubsystem The drive subsystem.
-   * @param joyStick The joystick.
+   * @param joyStick       The joystick.
    */
   public DriveCommand(DriveSubsystem driveSubsystem, Joystick joyStick) {
     m_driveSubsystem = driveSubsystem;
@@ -40,7 +42,7 @@ public class DriveCommand extends CommandBase {
   public void execute() {
     // get stick values and set the signs to match the arcade drive forward,rotate conventions
     double stickSpeed = -m_stick.getY();
-    double stickTurn = Constants.DRIVER.DRIVE_USE_TWIST ? -m_stick.getTwist() : -m_stick.getX();
+    double stickTurn = m_stick.getRawButton(2) ? 0.0 : (Constants.DRIVER.DRIVE_USE_TWIST ? -m_stick.getTwist() : -m_stick.getX());
     // subtract the dead band and scale what is left outside the dead band
     double speedSignMult = (stickSpeed > 0.0) ? 1.0 : -1.0;
     double turnSignMult = (stickTurn > 0.0) ? 1.0 : -1.0;
@@ -57,7 +59,7 @@ public class DriveCommand extends CommandBase {
         (Constants.DRIVER.DRIVE_TURN_GAIN +
             (useSpeed * (Constants.DRIVER.DRIVE_TURN_AT_SPEED_GAIN - Constants.DRIVER.DRIVE_TURN_GAIN)));
     // Now set the speeds
-    m_driveSubsystem.setArcadeSpeed(forward, rotate);
+    m_driveSubsystem.setArcadeSpeed(forward, rotate, 0.0 == rotate, 0.0 != rotate);
   }
 
   // Called once the command ends or is interrupted.

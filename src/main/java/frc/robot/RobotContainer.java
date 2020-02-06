@@ -105,7 +105,4 @@ public class RobotContainer {
     return m_limelight;
   }
 
-  public NavX getNavX() {
-    return m_navx;
-  }
 }

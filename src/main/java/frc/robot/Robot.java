@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.Limelight;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -25,11 +24,11 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
 
   /**
-   *  Display a double value on the smart dashboard telemetry panel.
+   * Display a double value on the smart dashboard telemetry panel.
    *
    * @param port The index where the string should appear in the dashboard.
-   * @param key The keyword(s) describing what the value is.
-   * @param var The value to be displayed.
+   * @param key  The keyword(s) describing what the value is.
+   * @param var  The value to be displayed.
    */
   @SuppressWarnings("unused")
   private void dashboardTelemetry(int port, String key, double var) {
@@ -37,11 +36,11 @@ public class Robot extends TimedRobot {
   }
 
   /**
-   *  Display a string value on the smart dashboard telemetry panel.
+   * Display a string value on the smart dashboard telemetry panel.
    *
    * @param port The index where the string should appear in the dashboard.
-   * @param key The keyword(s) describing what the value is.
-   * @param var The value to be displayed.
+   * @param key  The keyword(s) describing what the value is.
+   * @param var  The value to be displayed.
    */
   @SuppressWarnings("unused")
   private void dashboardTelemetry(int port, String key, String var) {
@@ -49,18 +48,19 @@ public class Robot extends TimedRobot {
   }
 
   /**
-   *  Display a boolean value on the smart dashboard telemetry panel as either 'on' ({@code true}) or
-   *  'off' ({@code false}).
+   * Display a boolean value on the smart dashboard telemetry panel as either 'on' ({@code true}) or
+   * 'off' ({@code false}).
    *
    * @param port The index where the string should appear in the dashboard.
-   * @param key The keyword(s) describing what the value is.
-   * @param var The value to be displayed.
+   * @param key  The keyword(s) describing what the value is.
+   * @param var  The value to be displayed.
    */
   @SuppressWarnings("unused")
   private void dashboardTelemetry(int port, String key, boolean var) {
     SmartDashboard.putString(String.format("DB/String %d", port),
-        String.format("%s: %s", key, var ? "on" : "off" ));
+        String.format("%s: %s", key, var ? "on" : "off"));
   }
+
   /**
    * This method displays the telemetry for the robot. It is run during both enabled and disabled modes, so it is very useful
    * if you want to get sensor feedback while the robot is disabled. Please put your driver team (and builder/programmer)
@@ -70,10 +70,15 @@ public class Robot extends TimedRobot {
     dashboardTelemetry(0, "robot", Constants.ROBOT.ROBOT_NAME);
     dashboardTelemetry(5, "driver", Constants.DRIVER.DRIVER_NAME);
 
-    NavX.NavInfo navInfo = m_robotContainer.getNavX().getNavInfo();
+    NavX.NavInfo navInfo = NavX.getInstance().getNavInfo();
     dashboardTelemetry(2, "pitch", navInfo.pitch);
     dashboardTelemetry(3, "yaw", navInfo.yaw);
     dashboardTelemetry(4, "roll", navInfo.roll);
+
+    NavX.HeadingInfo headinnInfo = NavX.getInstance().getHeadingInfo();
+    dashboardTelemetry(6, "expected:", headinnInfo.expectedHeading);
+    dashboardTelemetry(7, "actual", headinnInfo.heading);
+    dashboardTelemetry(8, "in Turn", headinnInfo.isExpectedTrackingCurrent);
 
   }
 
@@ -90,6 +95,7 @@ public class Robot extends TimedRobot {
     for (int i = 0; i < 10; i++) {
       SmartDashboard.putString(String.format("DB/String %d", i), " ");
     }
+    NavX.getInstance().initializeHeadingAndNav();
   }
 
   /**
@@ -131,6 +137,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+    NavX.getInstance().initializeHeadingAndNav();
   }
 
   /**
@@ -138,6 +145,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    useTelemetry(); // output telemetry
   }
 
   @Override
@@ -149,6 +157,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    NavX.getInstance().initializeHeadingAndNav();
   }
 
   /**
