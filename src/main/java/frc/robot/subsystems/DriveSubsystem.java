@@ -58,13 +58,13 @@ public class DriveSubsystem extends SubsystemBase {
     rightMaster.config_IntegralZone(0, (int)(Constants.INTEGRAL_ZONE * Constants.MAX_SPEED));
     rightMaster.config_kD(0, 0);
     rightMaster.config_kF(0, Constants.DRIVE_KF);
-    rightMaster.setSensorPhase(false);
+    rightMaster.setSensorPhase(Constants.DRIVE_ENCODER_PHASE);
     leftMaster.config_kP(0, Constants.DRIVE_KP);
     leftMaster.config_kI(0, Constants.DRIVE_KI);
     leftMaster.config_IntegralZone(0, (int)(Constants.INTEGRAL_ZONE * Constants.MAX_SPEED));
     leftMaster.config_kD(0, 0);
     leftMaster.config_kF(0, Constants.DRIVE_KF);
-    leftMaster.setSensorPhase(false);
+    leftMaster.setSensorPhase(Constants.DRIVE_ENCODER_PHASE);
     // reset encoders
     resetEncoders();
   }
@@ -83,10 +83,10 @@ public class DriveSubsystem extends SubsystemBase {
    *                clockwise, positive is counter-clockwise).
    */
   public void setArcadePower(double forward, double rotate) {
-    double max = Math.abs(forward) + (Math.abs(forward) * Math.abs(Constants.DRIVE_TURN_BIAS)) + Math.abs(rotate);
+    double max = Math.abs(forward) + Math.abs(rotate);
     double scale = (max <= 1.0) ? 1.0 : (1.0 / max);
-    rightMaster.set(ControlMode.PercentOutput, scale * (forward + (rotate + (forward * Constants.DRIVE_TURN_BIAS))));
-    leftMaster.set(ControlMode.PercentOutput, scale * (forward - (rotate + (forward * Constants.DRIVE_TURN_BIAS))));
+    rightMaster.set(ControlMode.PercentOutput, scale * (forward + rotate));
+    leftMaster.set(ControlMode.PercentOutput, scale * (forward - rotate));
   }
 
   public void setArcadeSpeed(double forward, double turn) {

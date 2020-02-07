@@ -60,17 +60,18 @@ public final class Constants {
 
     // -----------------------------------------------------------------------------------------------------------------------------
     // Tuning speed Drive tuning (using encoders and the Talon SRX PID control) - from 2019 summer sessions
+    public static boolean DRIVE_ENCODER_PHASE = true;
 
-    public static double DRIVE_KP = 2.5;
+    public static double DRIVE_KP = 0.0;
 
-    public static double DRIVE_KI = 0.000;
+    public static double DRIVE_KI = 0.110;
 
-    public static double DRIVE_KF = 4.5;
+    public static double DRIVE_KF = 0.129;
 
     public static double INTEGRAL_ZONE = 0.0;
 
     // MAX_SPEED of motors for SpeedDrive
-    public static final double MAX_SPEED = 230;
+    public static final double MAX_SPEED = 7800;
 
     // -----------------------------------------------------------------------------------------------------------------------------
     // Tuning IMU control of direction (heading)

@@ -30,7 +30,7 @@ public class RunDriveAtMaxPower extends CommandBase {
   @Override
   public boolean isFinished() {
     // we are done when the trigger is released
-    return !m_stick.getTrigger();
+    return !m_stick.getRawButton(1);
   }
 
   @Override

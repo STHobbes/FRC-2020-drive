@@ -72,10 +72,10 @@ public class RobotContainer {
     m_trigger.whenPressed(new RunDriveAtMaxPower(m_driveSubsystem,m_stick));
     m_button7.whenPressed(new AdjustkI(-0.001, m_driveSubsystem));
     m_button8.whenPressed(new AdjustkI(0.001, m_driveSubsystem));
-    m_button9.whenPressed(new AdjustkP(-0.1));
-    m_button10.whenPressed(new AdjustkP(0.1));
-    m_button11.whenPressed(new AdjustkF(-0.1));
-    m_button12.whenPressed(new AdjustkF(0.1));
+    m_button9.whenPressed(new AdjustkP(-0.01));
+    m_button10.whenPressed(new AdjustkP(0.01));
+    m_button11.whenPressed(new AdjustkF(-0.002));
+    m_button12.whenPressed(new AdjustkF(0.002));
   }
 
 

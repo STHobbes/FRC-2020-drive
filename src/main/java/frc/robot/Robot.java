@@ -37,8 +37,8 @@ public class Robot extends TimedRobot {
     dashboardTelemetry(5, "target left", m_robotContainer.getDrive().getTargetLeftSpeed());
     dashboardTelemetry(1, "right speed", m_robotContainer.getDrive().getRightSpeed());
     dashboardTelemetry(6, "left speed", m_robotContainer.getDrive().getLeftSpeed());
-    dashboardTelemetry(2, "right encoder", m_robotContainer.getDrive().getRightPosition());
-    dashboardTelemetry(7, "left encoder", m_robotContainer.getDrive().getLeftPosition());
+    dashboardTelemetry(2, "right enc", m_robotContainer.getDrive().getRightPosition());
+    dashboardTelemetry(7, "left enc", m_robotContainer.getDrive().getLeftPosition());
     dashboardTelemetry(3, "kP", Constants.DRIVE_KP);
     dashboardTelemetry(8, "kI", Constants.DRIVE_KI);
     dashboardTelemetry(4, "kF", Constants.DRIVE_KF);
