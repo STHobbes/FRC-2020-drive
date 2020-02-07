@@ -108,7 +108,8 @@ public class DriveSubsystem extends SubsystemBase {
       NavX.HeadingInfo headingInfo = m_navx.getHeadingInfo();
       if (null != headingInfo) {
         // We really do have a working NavX, so incorporate it into keeping the robot moving in the correct direction.
-        rotate = Math.abs(forward) * Constants.ROBOT.DRIVE_HEADING_Kp * (headingInfo.expectedHeading - headingInfo.heading);
+        rotate = Math.abs(forward) * Constants.ROBOT.DRIVE_HEADING_Kp *
+                (headingInfo.expectedHeading - headingInfo.heading);
       }
     }
     double max = Math.abs(forward) + Math.abs(rotate);

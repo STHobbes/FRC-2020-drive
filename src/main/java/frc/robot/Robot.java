@@ -76,9 +76,8 @@ public class Robot extends TimedRobot {
     dashboardTelemetry(4, "roll", navInfo.roll);
 
     NavX.HeadingInfo headinnInfo = NavX.getInstance().getHeadingInfo();
-    dashboardTelemetry(6, "expected:", headinnInfo.expectedHeading);
-    dashboardTelemetry(7, "actual", headinnInfo.heading);
-    dashboardTelemetry(8, "in Turn", headinnInfo.isExpectedTrackingCurrent);
+    dashboardTelemetry(8, "expected:", headinnInfo.expectedHeading);
+    dashboardTelemetry(9, "actual", headinnInfo.heading);
 
   }
 

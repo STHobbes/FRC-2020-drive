@@ -110,7 +110,7 @@ public class NavX {
       // there is a problem communication with the NavX - the results we would get from NavX queries are unreliable.
       return null;
     }
-    return new HeadingInfo(0.0, m_expectedHeading, m_setExpectedToCurrent);
+    return new HeadingInfo(m_heading, m_expectedHeading, m_setExpectedToCurrent);
   }
 
   /**
