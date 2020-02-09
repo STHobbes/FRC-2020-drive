@@ -76,7 +76,7 @@ public final class Constants {
     //   - Ki -
     //   - integral_zone -
     public enum Robots {
-        COMPETITION_ROBOT("competition", 0.0, 4.5, 2.5, 0.0, 0.0, 230.0),
+        COMPETITION_ROBOT("competition", 0.009, 0.131, 0.09, 0.0, 0.0, 4800.0),
         PRACTICE_ROBOT("practice", 0.019, 4.5, 2.5, 0.0, 0.0, 230.0);
 
         // The robot configuration that is running.
@@ -107,7 +107,7 @@ public final class Constants {
         }
     }
 
-    public static Robots ROBOT = Robots.PRACTICE_ROBOT;
+    public static Robots ROBOT = Robots.COMPETITION_ROBOT;
 
     // -----------------------------------------------------------------------------------------------------------------------------
     // Tuning IMU control of direction (heading)
