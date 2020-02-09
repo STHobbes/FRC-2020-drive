@@ -94,6 +94,8 @@ public class DriveSubsystem extends SubsystemBase {
     double max = Math.abs(forward) + Math.abs(rotate);
     double scale = (max <= 1.0) ? 1.0 : (1.0 / max);
 
+    setRobot();
+
     targetRightSpeed = scale * (forward + rotate) * Constants.ROBOT.DRIVE_MAX_RPM;
     targetLeftSpeed = scale * (forward - rotate) * Constants.ROBOT.DRIVE_MAX_RPM;
 
@@ -116,14 +118,14 @@ public class DriveSubsystem extends SubsystemBase {
     rightMaster.config_kF(0, Constants.ROBOT.DRIVE_Kf * (1.0 + Constants.ROBOT.DRIVE_TURN_BIAS));
     rightMaster.config_kP(0, Constants.ROBOT.DRIVE_Kp);
     rightMaster.config_kI(0, Constants.ROBOT.DRIVE_Ki);
-    rightMaster.config_IntegralZone(0, (int)(Constants.ROBOT.DRIVE_Ki * Constants.ROBOT.DRIVE_MAX_RPM));
+    rightMaster.config_IntegralZone(0, (int)(Constants.ROBOT.DRIVE_INTEGRAL_ZONE * Constants.ROBOT.DRIVE_MAX_RPM));
     rightMaster.config_kD(0, 0);
     rightMaster.setSensorPhase(false);
     // left drivetrain TalonSRX PID
     leftMaster.config_kF(0, Constants.ROBOT.DRIVE_Kf * (1.0 - Constants.ROBOT.DRIVE_TURN_BIAS));
     leftMaster.config_kP(0, Constants.ROBOT.DRIVE_Kp);
     leftMaster.config_kI(0, Constants.ROBOT.DRIVE_Ki);
-    leftMaster.config_IntegralZone(0, (int)(Constants.ROBOT.DRIVE_Ki * Constants.ROBOT.DRIVE_MAX_RPM));
+    leftMaster.config_IntegralZone(0, (int)(Constants.ROBOT.DRIVE_INTEGRAL_ZONE * Constants.ROBOT.DRIVE_MAX_RPM));
     leftMaster.config_kD(0, 0);
     leftMaster.setSensorPhase(false);
   }
