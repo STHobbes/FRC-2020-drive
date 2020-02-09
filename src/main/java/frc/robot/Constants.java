@@ -62,11 +62,11 @@ public final class Constants {
     // Tuning speed Drive tuning (using encoders and the Talon SRX PID control) - from 2019 summer sessions
     public static boolean DRIVE_ENCODER_PHASE = true;
 
+    public static double DRIVE_KF = 0.129;
+
     public static double DRIVE_KP = 0.0;
 
-    public static double DRIVE_KI = 0.110;
-
-    public static double DRIVE_KF = 0.129;
+    public static double DRIVE_KI = 0.0;
 
     public static double INTEGRAL_ZONE = 0.0;
 
