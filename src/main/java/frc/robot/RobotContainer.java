@@ -10,11 +10,14 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.*;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.SweeperSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -25,6 +28,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+  private final ArmSubsystem m_armSubsystem = ArmSubsystem.getInstance();
+  private final SweeperSubsystem m_sweeperSubsystem = SweeperSubsystem.getInstance();
+  private final Limelight m_limelight = new Limelight();
 
   // The driver station buttons
   // - the joystick and buttons
@@ -54,13 +60,17 @@ public class RobotContainer {
 
   // - the xbox controller and buttons
   private final XboxController m_xbox = new XboxController(1);
-  private final JoystickButton xboxY = new JoystickButton(m_xbox, 1);
-  private final JoystickButton xboxA = new JoystickButton(m_xbox, 2);
-  private final JoystickButton xboxB = new JoystickButton(m_xbox, 3);
-  private final JoystickButton xboxX = new JoystickButton(m_xbox, 4);
+  private final JoystickButton xboxA = new JoystickButton(m_xbox, 1);
+  private final JoystickButton xboxB = new JoystickButton(m_xbox, 2);
+  private final JoystickButton xboxX = new JoystickButton(m_xbox, 3);
+  private final JoystickButton xboxY = new JoystickButton(m_xbox, 4);
 
   // The robot's commands
   private final DriveCommand m_driveCommand = new DriveCommand(m_driveSubsystem, m_stick);
+  private final RunSweeper m_runSweeper = new RunSweeper(m_sweeperSubsystem, m_stick);
+  private final ManualCollector m_manualCollector = new ManualCollector(m_armSubsystem, m_xbox);
+  private final SetDriveCamera m_setDriveCamera = new SetDriveCamera(m_limelight);
+  private final SetVisionCamera m_setVisionCamera = new SetVisionCamera(m_limelight);
 
 
   /**
@@ -71,6 +81,8 @@ public class RobotContainer {
     m_driveSubsystem.setRobot();
     // Set the default commands for subsystems
     m_driveSubsystem.setDefaultCommand(m_driveCommand);
+    m_sweeperSubsystem.setDefaultCommand(m_runSweeper);
+    m_armSubsystem.setDefaultCommand(m_manualCollector);
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -78,11 +90,12 @@ public class RobotContainer {
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
+   * edu.wpi.first.wpilibj.Joystick}, and then passing it to a
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
     xboxA.whenPressed(new SetNextRobot(this));
+    xboxB.whenPressed(new SetNextDriver(this));
 
     // Use stick twist or left-right for turn
     m_trigger.whenPressed(new ToggleUseTwist());
@@ -114,6 +127,10 @@ public class RobotContainer {
     m_driveSubsystem.setRobot();
   }
 
+  public void resetDriver() {
+
+  }
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -125,5 +142,9 @@ public class RobotContainer {
 
   public DriveSubsystem getDrive() {
     return m_driveSubsystem;
+  }
+
+  public Limelight getLimelight() {
+    return m_limelight;
   }
 }

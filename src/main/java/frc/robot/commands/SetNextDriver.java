@@ -11,14 +11,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
-public class SetNextRobot extends CommandBase {
+public class SetNextDriver extends CommandBase {
 
   private RobotContainer m_container;
 
   /**
-   * Creates a new IncrementRobot.
+   * Creates a new IncrementDriver.
    */
-  public SetNextRobot(RobotContainer container) {
+  public SetNextDriver(RobotContainer container) {
     m_container = container;
   }
 
@@ -30,8 +30,8 @@ public class SetNextRobot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Constants.ROBOT = Constants.Robots.getNextRobot(Constants.ROBOT);
-    m_container.resetRobot();
+    Constants.DRIVER = Constants.Drivers.getNextDriver(Constants.DRIVER);
+    m_container.resetDriver();
   }
 
   // Called once the command ends or is interrupted.

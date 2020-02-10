@@ -11,6 +11,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.SweeperSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -19,9 +22,33 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
 
+  private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
+  private Limelight m_limelight;
+//  private SendableChooser<Constants.Robots> robotChooser = new SendableChooser<>();
+
+  private void dashboardTelemetry(int port, String key, double var) {
+    SmartDashboard.putString(String.format("DB/String %d", port), String.format("%s: %4.3f", key, var));
+  }
+
+  private void dashboardTelemetry(int port, String key, String var) {
+    SmartDashboard.putString(String.format("DB/String %d", port), String.format("%s: %s", key, var));
+  }
+
+  private void useTelemetry() {
+    /* dashboardTelemetry(0, "target", m_limelight.isTarget()); // 0 means no target, 1 means target acquired
+    dashboardTelemetry(1, "x", m_limelight.getX()); // horizontal distance from cursor
+    dashboardTelemetry(2, "y", m_limelight.getArea()); // vertical distance from cursor
+    dashboardTelemetry(3, "area", m_limelight.getArea()); // area of target */
+
+    dashboardTelemetry(0, "robot", Constants.ROBOT.ROBOT_NAME);
+    dashboardTelemetry(5, "driver", Constants.DRIVER.DRIVER_NAME);
+
+    dashboardTelemetry(2, "sweeper", SweeperSubsystem.getInstance().getSweeperPower());
+    dashboardTelemetry(3, "arm enc", ArmSubsystem.getInstance().getPosition());
+    dashboardTelemetry(4, "arm power", ArmSubsystem.getInstance().getPositionPower());
+  }
 
   private void dashboardTelemetry(int port, String key, double var) {
     SmartDashboard.putString(String.format("DB/String %d", port), String.format("%s: %4.3f", key, var));
@@ -36,9 +63,10 @@ public class Robot extends TimedRobot {
 
   void displayDriveParameters() {
     dashboardTelemetry(0, "robot", Constants.ROBOT.ROBOT_NAME);
-    dashboardTelemetry(5, "twist", Constants.DRIVE_USE_TWIST);
+    dashboardTelemetry(5, "driver", Constants.DRIVER.DRIVER_NAME);
 
-    dashboardTelemetry(1, "speed gain", Constants.DRIVE_SPEED_GAIN);
+    dashboardTelemetry(1, "twist", Constants.DRIVE_USE_TWIST);
+    dashboardTelemetry(2, "speed gain", Constants.DRIVE_SPEED_GAIN);
     dashboardTelemetry(6, "speed senstvty", Constants.DRIVE_SPEED_SENSITIVITY);
     dashboardTelemetry(7, "speed deadband", Constants.DRIVE_SPEED_DEADBAND);
 
@@ -59,8 +87,15 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     // empty the telemetry display
     for (int i = 0; i < 10; i++) {
-      SmartDashboard.putString(String.format("DB/String %d",i), " ");
+      SmartDashboard.putString(String.format("DB/String %d", i), " ");
     }
+
+    m_limelight = m_robotContainer.getLimelight();
+    m_limelight.setDriveCamera();
+
+//    robotChooser.setDefaultOption(Constants.Robots.COMPETITION_ROBOT.ROBOT_NAME, Constants.Robots.COMPETITION_ROBOT);
+//    robotChooser.addOption(Constants.Robots.PRACTICE_ROBOT.ROBOT_NAME, Constants.Robots.PRACTICE_ROBOT);
+//    SmartDashboard.putData("Robot Selection", robotChooser);
   }
 
   /**
@@ -85,6 +120,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+//    Constants.ROBOT = robotChooser.getSelected();
+//    m_robotContainer.resetRobot();
   }
 
   @Override
@@ -97,6 +134,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+//    Constants.ROBOT = robotChooser.getSelected();
+//    m_robotContainer.resetRobot();
+
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -114,6 +154,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+//    Constants.ROBOT = robotChooser.getSelected();
+//    m_robotContainer.resetRobot();
+
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -132,6 +175,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
+//    Constants.ROBOT = robotChooser.getSelected();
+//    m_robotContainer.resetRobot();
+
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
   }
