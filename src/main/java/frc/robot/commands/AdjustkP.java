@@ -21,7 +21,7 @@ public class AdjustkP extends AdjusterBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    Constants.DRIVE_KP += delta;
+    Constants.ROBOT.DRIVE_Kp += delta;
     return true;
   }
 }

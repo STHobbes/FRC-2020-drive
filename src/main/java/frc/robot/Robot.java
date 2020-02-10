@@ -39,15 +39,15 @@ public class Robot extends TimedRobot {
     dashboardTelemetry(0, "robot", Constants.ROBOT.ROBOT_NAME);
     dashboardTelemetry(5, "driver", Constants.DRIVER.DRIVER_NAME);
 
-    dashboardTelemetry(0, "target right", m_robotContainer.getDrive().getTargetRightSpeed());
-    dashboardTelemetry(5, "target left", m_robotContainer.getDrive().getTargetLeftSpeed());
-    dashboardTelemetry(1, "right speed", m_robotContainer.getDrive().getRightSpeed());
-    dashboardTelemetry(6, "left speed", m_robotContainer.getDrive().getLeftSpeed());
+    dashboardTelemetry(1, "right delta",
+        m_robotContainer.getDrive().getRightSpeed() - m_robotContainer.getDrive().getTargetRightSpeed());
+    dashboardTelemetry(6, "left delta",
+        m_robotContainer.getDrive().getLeftSpeed() - m_robotContainer.getDrive().getTargetLeftSpeed());
     dashboardTelemetry(2, "right enc", m_robotContainer.getDrive().getRightPosition());
     dashboardTelemetry(7, "left enc", m_robotContainer.getDrive().getLeftPosition());
-    dashboardTelemetry(3, "kP", Constants.DRIVE_KP);
-    dashboardTelemetry(4, "kF", Constants.DRIVE_KF);
-    dashboardTelemetry(9, "turn bias", Constants.DRIVE_TURN_BIAS);
+    dashboardTelemetry(4, "Kp", Constants.ROBOT.DRIVE_Kf);
+    dashboardTelemetry(3, "Kf", Constants.ROBOT.DRIVE_Kp);
+    dashboardTelemetry(8, "turn bias", Constants.ROBOT.DRIVE_TURN_BIAS);
   }
 
   /**

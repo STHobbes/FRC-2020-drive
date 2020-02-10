@@ -98,7 +98,9 @@ public class DriveSubsystem extends SubsystemBase {
     m_targetRightSpeed = scale * (forward + rotate) * Constants.ROBOT.DRIVE_MAX_RPM;
     m_targetLeftSpeed = scale * (forward - rotate) * Constants.ROBOT.DRIVE_MAX_RPM;
 
-    setupTalonPID();
+    // do thie every time to account for PID settings being tuned.
+    setupTalonPID(m_rightMaster, (1.0 + Constants.ROBOT.DRIVE_TURN_BIAS));
+    setupTalonPID(m_leftMaster, (1.0 - Constants.ROBOT.DRIVE_TURN_BIAS));
 
     m_rightMaster.set(ControlMode.Velocity, m_targetRightSpeed);
     m_leftMaster.set(ControlMode.Velocity, m_targetLeftSpeed);

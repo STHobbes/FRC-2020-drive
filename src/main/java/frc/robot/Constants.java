@@ -106,12 +106,12 @@ public final class Constants {
     // The robot configuration that is running.
     public final String ROBOT_NAME;
     // The setup of the drive PID for the Talon SRX
-    public final double DRIVE_TURN_BIAS;
-    public final boolean DRIVE_ENCODER_PHASE;
-    public final double DRIVE_Kf;
-    public final double DRIVE_Kp;
-    public final double DRIVE_Ki;
-    public final double DRIVE_INTEGRAL_ZONE;
+    public double DRIVE_TURN_BIAS;
+    public boolean DRIVE_ENCODER_PHASE;
+    public double DRIVE_Kf;
+    public double DRIVE_Kp;
+    public double DRIVE_Ki;
+    public double DRIVE_INTEGRAL_ZONE;
     public final double DRIVE_MAX_RPM;
     // The encoder values for autonomous move some distance and turn some degrees.
     public final double DRIVE_TICS_PER_INCH;

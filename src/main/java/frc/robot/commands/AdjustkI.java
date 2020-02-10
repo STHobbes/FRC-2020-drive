@@ -24,7 +24,7 @@ public class AdjustkI extends AdjusterBase {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   public boolean isFinished() {
-    Constants.DRIVE_KI += delta;
+    Constants.ROBOT.DRIVE_Ki += delta;
     m_drive.resetIntegral();
     return true;
   }
