@@ -18,8 +18,7 @@ When the program is first loaded and initialized, there is a reasonable set of d
 behaviour of the robot will not be too stupid). We think this is the best strategy for tuning (see the next section
 for the mapping between drive parameters and the controls that modify them):
 * Use stick twist or stick X (side-to-side) for turn - depends on the games you play and controllers you use. Try
-  them both
-  and pick the one you like best for the rest of the tuning.
+  them both and pick the one you like best for the rest of the tuning.
 * Start with speed gain, turn gain, and drive at speed gain (all on the) little hat (POV control) on the top of
   the control stick.
   * **Speed Gain** is, by default, set to 1.0 resulting in the fastest speed the robot can achieve when the stick
