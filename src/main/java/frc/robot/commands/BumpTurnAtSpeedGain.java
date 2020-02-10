@@ -28,11 +28,11 @@ public class BumpTurnAtSpeedGain extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Constants.DRIVE_TURN_AT_SPEED_GAIN += m_inc;
-    if (Constants.DRIVE_TURN_AT_SPEED_GAIN > 0.5) {
-      Constants.DRIVE_TURN_AT_SPEED_GAIN = 0.5;
-    } else if (Constants.DRIVE_TURN_AT_SPEED_GAIN < 0.05) {
-      Constants.DRIVE_TURN_AT_SPEED_GAIN = 0.05;
+    Constants.DRIVER.DRIVE_TURN_AT_SPEED_GAIN += m_inc;
+    if (Constants.DRIVER.DRIVE_TURN_AT_SPEED_GAIN > 0.5) {
+      Constants.DRIVER.DRIVE_TURN_AT_SPEED_GAIN = 0.5;
+    } else if (Constants.DRIVER.DRIVE_TURN_AT_SPEED_GAIN < 0.05) {
+      Constants.DRIVER.DRIVE_TURN_AT_SPEED_GAIN = 0.05;
     }
   }
 

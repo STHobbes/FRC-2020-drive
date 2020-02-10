@@ -28,11 +28,11 @@ public class BumpSpeedDeadband extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Constants.DRIVE_SPEED_DEADBAND += m_inc;
-    if (Constants.DRIVE_SPEED_DEADBAND > 0.1) {
-      Constants.DRIVE_SPEED_DEADBAND = 0.1;
-    } else if (Constants.DRIVE_SPEED_DEADBAND < 0.0) {
-      Constants.DRIVE_SPEED_DEADBAND = 0.0;
+    Constants.DRIVER.DRIVE_SPEED_DEADBAND += m_inc;
+    if (Constants.DRIVER.DRIVE_SPEED_DEADBAND > 0.1) {
+      Constants.DRIVER.DRIVE_SPEED_DEADBAND = 0.1;
+    } else if (Constants.DRIVER.DRIVE_SPEED_DEADBAND < 0.0) {
+      Constants.DRIVER.DRIVE_SPEED_DEADBAND = 0.0;
     }
   }
 

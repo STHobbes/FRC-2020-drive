@@ -28,11 +28,11 @@ public class BumpTurnDeadband extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        Constants.DRIVE_TURN_DEADBAND += m_inc;
-        if (Constants.DRIVE_TURN_DEADBAND > 0.1) {
-            Constants.DRIVE_TURN_DEADBAND = 0.1;
-        } else if (Constants.DRIVE_TURN_DEADBAND < 0.0) {
-            Constants.DRIVE_TURN_DEADBAND = 0.0;
+        Constants.DRIVER.DRIVE_TURN_DEADBAND += m_inc;
+        if (Constants.DRIVER.DRIVE_TURN_DEADBAND > 0.1) {
+            Constants.DRIVER.DRIVE_TURN_DEADBAND = 0.1;
+        } else if (Constants.DRIVER.DRIVE_TURN_DEADBAND < 0.0) {
+            Constants.DRIVER.DRIVE_TURN_DEADBAND = 0.0;
         }
     }
 

@@ -31,36 +31,36 @@ public final class Constants {
   public enum Drivers {
     ADEN("Aden", true, 1.0, 0.5, 0.5, 2.0, 3.0, 0.05, 0.05),
     LUCAS("Lucas", true, 1.0, 0.5, 0.1, 2.0, 3.0, 0.05, 0.05),
-    ROY("Roy", false, 1.0, 0.5, 0.1, 2.0, 3.0, 0.05, 0.05);
+    ROY("Roy", false, 1.0, 0.5, 0.2, 2.0, 3.0, 0.05, 0.05);
 
     // The driver name presented on the dashboard.
     public final String DRIVER_NAME;
 
     // If true, use the joystick twist for turn control; if false yous the stick X value for turn control.
-    public final boolean DRIVE_USE_TWIST;
+    public boolean DRIVE_USE_TWIST;
 
     // The multiplier for full stick to give the power/speed requested from the drive.
-    public final double DRIVE_SPEED_GAIN;
+    public double DRIVE_SPEED_GAIN;
 
     // The multiplier for full twist to give the power/speed differential requested from the drive.
-    public final double DRIVE_TURN_GAIN;
+    public double DRIVE_TURN_GAIN;
 
     // The multiplier for full twist to give the power/speed differential requested from the drive.
-    public final double DRIVE_TURN_AT_SPEED_GAIN;
+    public double DRIVE_TURN_AT_SPEED_GAIN;
 
     // The width of the 0 dead-band of the speed stick as a fraction of full stick movement.
-    public final double DRIVE_SPEED_DEADBAND;
+    public double DRIVE_SPEED_DEADBAND;
 
     // The width of the 0 dead-band of the turn control as a fraction of full control movement.
-    public final double DRIVE_TURN_DEADBAND;
+    public double DRIVE_TURN_DEADBAND;
 
     // The center-stick sensitivity for forward-reverse control, which is really the exponent applied to the stick
     // position to flatten drive response to stick position for greater sensitivity at low speed.
-    public final double DRIVE_SPEED_SENSITIVITY;
+    public double DRIVE_SPEED_SENSITIVITY;
 
     // The center-stick sensitivity for turn control, which is really the exponent applied to the stick
     // position to flatten drive response to stick position for greater sensitivity at low speed.
-    public final double DRIVE_TURN_SENSITIVITY;
+    public double DRIVE_TURN_SENSITIVITY;
 
     Drivers(String driverName, boolean useTwist, double speedGain, double turnGain, double turnAtSpeedGain,
             double forwardSensitivity, double turnSensitivity, double speedDeadband, double turnDeadband) {

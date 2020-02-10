@@ -36,44 +36,24 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString(String.format("DB/String %d", port), String.format("%s: %s", key, var));
   }
 
-  private void useTelemetry() {
-    /* dashboardTelemetry(0, "target", m_limelight.isTarget()); // 0 means no target, 1 means target acquired
-    dashboardTelemetry(1, "x", m_limelight.getX()); // horizontal distance from cursor
-    dashboardTelemetry(2, "y", m_limelight.getArea()); // vertical distance from cursor
-    dashboardTelemetry(3, "area", m_limelight.getArea()); // area of target */
-
-    dashboardTelemetry(0, "robot", Constants.ROBOT.ROBOT_NAME);
-    dashboardTelemetry(5, "driver", Constants.DRIVER.DRIVER_NAME);
-
-    dashboardTelemetry(2, "sweeper", SweeperSubsystem.getInstance().getSweeperPower());
-    dashboardTelemetry(3, "arm enc", ArmSubsystem.getInstance().getPosition());
-    dashboardTelemetry(4, "arm power", ArmSubsystem.getInstance().getPositionPower());
-  }
-
-  private void dashboardTelemetry(int port, String key, double var) {
-    SmartDashboard.putString(String.format("DB/String %d", port), String.format("%s: %4.3f", key, var));
-  }
-  private void dashboardTelemetry(int port, String key, String var) {
-    SmartDashboard.putString(String.format("DB/String %d", port), String.format("%s: %s", key, var));
-  }
   private void dashboardTelemetry(int port, String key, boolean var) {
     SmartDashboard.putString(String.format("DB/String %d", port),
-            String.format("%s: %s", key, var ? "on" : "off" ));
+        String.format("%s: %s", key, var ? "on" : "off" ));
   }
 
   void displayDriveParameters() {
     dashboardTelemetry(0, "robot", Constants.ROBOT.ROBOT_NAME);
     dashboardTelemetry(5, "driver", Constants.DRIVER.DRIVER_NAME);
 
-    dashboardTelemetry(1, "twist", Constants.DRIVE_USE_TWIST);
-    dashboardTelemetry(2, "speed gain", Constants.DRIVE_SPEED_GAIN);
-    dashboardTelemetry(6, "speed senstvty", Constants.DRIVE_SPEED_SENSITIVITY);
-    dashboardTelemetry(7, "speed deadband", Constants.DRIVE_SPEED_DEADBAND);
+    dashboardTelemetry(1, "twist", Constants.DRIVER.DRIVE_USE_TWIST);
+    dashboardTelemetry(2, "speed gain", Constants.DRIVER.DRIVE_SPEED_GAIN);
+    dashboardTelemetry(6, "speed senstvty", Constants.DRIVER.DRIVE_SPEED_SENSITIVITY);
+    dashboardTelemetry(7, "speed deadband", Constants.DRIVER.DRIVE_SPEED_DEADBAND);
 
-    dashboardTelemetry(3, "turn gain", Constants.DRIVE_TURN_GAIN);
-    dashboardTelemetry(8, "turn senstvty", Constants.DRIVE_TURN_SENSITIVITY);
-    dashboardTelemetry(4, "turn@speed gain", Constants.DRIVE_TURN_AT_SPEED_GAIN);
-    dashboardTelemetry(9, "turn deadband", Constants.DRIVE_TURN_DEADBAND);
+    dashboardTelemetry(3, "turn gain", Constants.DRIVER.DRIVE_TURN_GAIN);
+    dashboardTelemetry(8, "turn senstvty", Constants.DRIVER.DRIVE_TURN_SENSITIVITY);
+    dashboardTelemetry(4, "turn@speed gain", Constants.DRIVER.DRIVE_TURN_AT_SPEED_GAIN);
+    dashboardTelemetry(9, "turn deadband", Constants.DRIVER.DRIVE_TURN_DEADBAND);
   }
 
   /**

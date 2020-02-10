@@ -26,7 +26,7 @@ public class ToggleUseTwist  extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        Constants.DRIVE_USE_TWIST = !Constants.DRIVE_USE_TWIST;
+        Constants.DRIVER.DRIVE_USE_TWIST = !Constants.DRIVER.DRIVE_USE_TWIST;
     }
 
     // Called once the command ends or is interrupted.
