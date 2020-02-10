@@ -20,11 +20,11 @@ public class DriveCommand extends CommandBase {
   /**
    * Creates a new Drive.
    */
-  public DriveCommand(DriveSubsystem driveSubystem, Joystick joyStick) {
-    m_driveSubsystem = driveSubystem;
+  public DriveCommand(DriveSubsystem driveSubsystem, Joystick joyStick) {
+    m_driveSubsystem = driveSubsystem;
     m_stick = joyStick;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(driveSubystem);
+    addRequirements(driveSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -36,22 +36,24 @@ public class DriveCommand extends CommandBase {
   @Override
   public void execute() {
     // get stick values and set the signs to match the arcade drive forward,rotate conventions
-    double stickY = -m_stick.getY();
-    double twist = -m_stick.getTwist();
-    Constants.DRIVE_TURN_BIAS = .1 * m_stick.getThrottle();
+    double stickSpeed = -m_stick.getY();
+    double stickTurn = Constants.DRIVER.DRIVE_USE_TWIST ? -m_stick.getTwist() : -m_stick.getX();
+    Constants.ROBOT.DRIVE_TURN_BIAS = .1 * m_stick.getThrottle();
     // subtract the dead band and scale what is left outside the dead band
-    double ySignMult = (stickY > 0.0) ? 1.0 : -1.0;
-    double twistSignMult = (twist > 0.0) ? 1.0 : -1.0;
-    double useY = (Math.abs(stickY) <= Constants.DRIVE_DEADBAND) ? 0.0 :
-            (Math.abs(stickY) - Constants.DRIVE_DEADBAND) / (1.0 - Constants.DRIVE_DEADBAND);
-    double useTwist = (Math.abs(twist) <= Constants.DRIVE_DEADBAND) ? 0.0 :
-            (Math.abs(twist) - Constants.DRIVE_DEADBAND) / (1.0 - Constants.DRIVE_DEADBAND);
+    double speedSignMult = (stickSpeed > 0.0) ? 1.0 : -1.0;
+    double turnSignMult = (stickTurn > 0.0) ? 1.0 : -1.0;
+    double useSpeed = (Math.abs(stickSpeed) <= Constants.DRIVER.DRIVE_SPEED_DEADBAND) ? 0.0 :
+        (Math.abs(stickSpeed) - Constants.DRIVER.DRIVE_SPEED_DEADBAND) / (1.0 - Constants.DRIVER.DRIVE_SPEED_DEADBAND);
+    double useTurn = (Math.abs(stickTurn) <= Constants.DRIVER.DRIVE_TURN_DEADBAND) ? 0.0 :
+        (Math.abs(stickTurn) - Constants.DRIVER.DRIVE_TURN_DEADBAND) / (1.0 - Constants.DRIVER.DRIVE_TURN_DEADBAND);
     // do the sensitivity power function
-    useY = Math.pow(useY, Constants.DRIVE_SENSITIVITY);
-    useTwist = Math.pow(useTwist, Constants.DRIVE_SENSITIVITY);
+    useSpeed = Math.pow(useSpeed, Constants.DRIVER.DRIVE_SPEED_SENSITIVITY);
+    useTurn = Math.pow(useTurn, Constants.DRIVER.DRIVE_TURN_SENSITIVITY);
     // apply the gains
-    double forward = useY * Constants.DRIVE_FORWARD_GAIN * ySignMult;
-    double rotate = m_stick.getRawButton(2) ? 0.0 : (useTwist * Constants.DRIVE_TURN_GAIN * twistSignMult);
+    double forward = useSpeed * speedSignMult * Constants.DRIVER.DRIVE_SPEED_GAIN;
+    double rotate = useTurn * turnSignMult *
+        (Constants.DRIVER.DRIVE_TURN_GAIN +
+            (useSpeed * (Constants.DRIVER.DRIVE_TURN_AT_SPEED_GAIN - Constants.DRIVER.DRIVE_TURN_GAIN)));
     // Now set the speeds
     m_driveSubsystem.setArcadeSpeed(forward, rotate);
   }

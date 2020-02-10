@@ -11,22 +11,22 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class DriveSubsystem extends SubsystemBase {
 
-  private double targetLeftSpeed;
-  private double targetRightSpeed;
+  private double m_targetLeftSpeed;
+  private double m_targetRightSpeed;
 
   //    public Solenoid shifter = Constants.ENABLE_DRIVE_SHIFT ? new Solenoid(RobotMap.shifter) : null;
-  public TalonSRX rightMaster = new TalonSRX(Constants.MotorControllers.DRIVE_RIGHT_MASTER);
-  public TalonSRX rm2 = new TalonSRX(Constants.MotorControllers.DRIVE_RIGHT_SLAVE_1);
-  public TalonSRX rm3 = new TalonSRX(Constants.MotorControllers.DRIVE_RIGHT_SLAVE_2);
-  public TalonSRX leftMaster = new TalonSRX(Constants.MotorControllers.DRIVE_LEFT_MASTER);
-  public TalonSRX lm2 = new TalonSRX(Constants.MotorControllers.DRIVE_LEFT_SLAVE_1);
-  public TalonSRX lm3 = new TalonSRX(Constants.MotorControllers.DRIVE_LEFT_SLAVE_2);
+  private TalonSRX m_rightMaster = new TalonSRX(Constants.MotorControllers.DRIVE_RIGHT_MASTER);
+  private TalonSRX m_rm2 = new TalonSRX(Constants.MotorControllers.DRIVE_RIGHT_SLAVE_1);
+  private TalonSRX m_rm3 = new TalonSRX(Constants.MotorControllers.DRIVE_RIGHT_SLAVE_2);
+  private TalonSRX m_leftMaster = new TalonSRX(Constants.MotorControllers.DRIVE_LEFT_MASTER);
+  private TalonSRX m_lm2 = new TalonSRX(Constants.MotorControllers.DRIVE_LEFT_SLAVE_1);
+  private TalonSRX m_lm3 = new TalonSRX(Constants.MotorControllers.DRIVE_LEFT_SLAVE_2);
 
   /**
    * Creates a new DriveSubsystem.
@@ -34,37 +34,27 @@ public class DriveSubsystem extends SubsystemBase {
   public DriveSubsystem() {
     // constructs and configures all six drive motors
     // restore everything to known factory default state
-    rightMaster.configFactoryDefault();
-    rm2.configFactoryDefault();
-    rm3.configFactoryDefault();
-    leftMaster.configFactoryDefault();
-    lm2.configFactoryDefault();
-    lm3.configFactoryDefault();
+    m_rightMaster.configFactoryDefault();
+    m_rm2.configFactoryDefault();
+    m_rm3.configFactoryDefault();
+    m_leftMaster.configFactoryDefault();
+    m_lm2.configFactoryDefault();
+    m_lm3.configFactoryDefault();
     // now configure them
-    rm2.follow(rightMaster);
-    rm3.follow(rightMaster);
-    lm2.follow(leftMaster);
-    lm3.follow(leftMaster);
-    rm2.setInverted(InvertType.FollowMaster);
-    rm3.setInverted(InvertType.FollowMaster);
-    lm2.setInverted(InvertType.FollowMaster);
-    lm3.setInverted(InvertType.FollowMaster);
+    m_rm2.follow(m_rightMaster);
+    m_rm3.follow(m_rightMaster);
+    m_lm2.follow(m_leftMaster);
+    m_lm3.follow(m_leftMaster);
+    m_rm2.setInverted(InvertType.FollowMaster);
+    m_rm3.setInverted(InvertType.FollowMaster);
+    m_lm2.setInverted(InvertType.FollowMaster);
+    m_lm3.setInverted(InvertType.FollowMaster);
     setNeutralMode(NeutralMode.Coast);
-    rightMaster.setInverted(InvertType.InvertMotorOutput);
-    rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-    leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-    rightMaster.config_kP(0, Constants.DRIVE_KP);
-    rightMaster.config_kI(0, Constants.DRIVE_KI);
-    rightMaster.config_IntegralZone(0, (int)(Constants.INTEGRAL_ZONE * Constants.MAX_SPEED));
-    rightMaster.config_kD(0, 0);
-    rightMaster.config_kF(0, Constants.DRIVE_KF);
-    rightMaster.setSensorPhase(Constants.DRIVE_ENCODER_PHASE);
-    leftMaster.config_kP(0, Constants.DRIVE_KP);
-    leftMaster.config_kI(0, Constants.DRIVE_KI);
-    leftMaster.config_IntegralZone(0, (int)(Constants.INTEGRAL_ZONE * Constants.MAX_SPEED));
-    leftMaster.config_kD(0, 0);
-    leftMaster.config_kF(0, Constants.DRIVE_KF);
-    leftMaster.setSensorPhase(Constants.DRIVE_ENCODER_PHASE);
+    m_rightMaster.setInverted(InvertType.InvertMotorOutput);
+    m_rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    m_leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    // setup the drivetrain constants specific to the robot ...
+    setRobot();
     // reset encoders
     resetEncoders();
   }
@@ -77,80 +67,140 @@ public class DriveSubsystem extends SubsystemBase {
   /**
    * Set the drive motor power based on an arcade control model of forward and turn speed.
    *
+   * @param forward (double) forward power in the range -1.0 to 1.0 (negative is
+   *                backwards, positive is forward).
+   * @param rotate  (double) rotation power in the range -1.0 to 1.0 (negative is
+   *                clockwise, positive is counter-clockwise).
+   */
+  public void setArcadePower(double forward, double rotate) {
+    double max = Math.abs(forward) + (Math.abs(forward) * Math.abs(Constants.ROBOT.DRIVE_TURN_BIAS)) + Math.abs(rotate);
+    double scale = (max <= 1.0) ? 1.0 : (1.0 / max);
+    m_rightMaster.set(ControlMode.PercentOutput,
+        scale * (forward + (rotate + (forward * Constants.ROBOT.DRIVE_TURN_BIAS))));
+    m_leftMaster.set(ControlMode.PercentOutput,
+        scale * (forward - (rotate + (forward * Constants.ROBOT.DRIVE_TURN_BIAS))));
+  }
+
+  /**
+   * Set the desired drive speed as a factor of maximum drive speed in the range 0 to 1 (0 to -1) where 0 is
+   * stopped and 1 (-1) is the maximum forward (backward) speed that can be achieved by the drive.
+   *
    * @param forward (double) forward speed in the range -1.0 to 1.0 (negative is
    *                backwards, positive is forward).
    * @param rotate  (double) rotation speed in the range -1.0 to 1.0 (negative is
    *                clockwise, positive is counter-clockwise).
    */
-  public void setArcadePower(double forward, double rotate) {
+  public void setArcadeSpeed(double forward, double rotate) {
+
     double max = Math.abs(forward) + Math.abs(rotate);
     double scale = (max <= 1.0) ? 1.0 : (1.0 / max);
-    rightMaster.set(ControlMode.PercentOutput, scale * (forward + rotate));
-    leftMaster.set(ControlMode.PercentOutput, scale * (forward - rotate));
+
+    m_targetRightSpeed = scale * (forward + rotate) * Constants.ROBOT.DRIVE_MAX_RPM;
+    m_targetLeftSpeed = scale * (forward - rotate) * Constants.ROBOT.DRIVE_MAX_RPM;
+
+    setupTalonPID();
+
+    m_rightMaster.set(ControlMode.Velocity, m_targetRightSpeed);
+    m_leftMaster.set(ControlMode.Velocity, m_targetLeftSpeed);
   }
 
-  public void setArcadeSpeed(double forward, double turn) {
-
-    double max = Math.abs(forward) + Math.abs(turn);
-    double scale = (max <= 1.0) ? 1.0 : (1.0 / max);
-
-    rightMaster.config_kP(0, Constants.DRIVE_KP);
-    leftMaster.config_kP(0, Constants.DRIVE_KP);
-    rightMaster.config_kI(0, Constants.DRIVE_KI);
-    leftMaster.config_kI(0, Constants.DRIVE_KI);
-    rightMaster.config_IntegralZone(0, (int)(Constants.INTEGRAL_ZONE * Constants.MAX_SPEED));
-    leftMaster.config_IntegralZone(0, (int)(Constants.INTEGRAL_ZONE * Constants.MAX_SPEED));
-    rightMaster.config_kF(0, Constants.DRIVE_KF * (1.0 + Constants.DRIVE_TURN_BIAS));
-    leftMaster.config_kF(0, Constants.DRIVE_KF * (1.0 - Constants.DRIVE_TURN_BIAS));
-
-    targetRightSpeed = scale * (forward + turn) * Constants.MAX_SPEED;
-    targetLeftSpeed = scale * (forward - turn)  * Constants.MAX_SPEED;
-    
-    rightMaster.set(ControlMode.Velocity, targetRightSpeed);
-    leftMaster.set(ControlMode.Velocity, targetLeftSpeed);
-  }
-
+  /**
+   * Sets the neutral mode for all drive motor controllers.
+   *
+   * @param mode The neutral mode to be set.
+   */
   public void setNeutralMode(NeutralMode mode) {
     //method to easily set the neutral mode of all of the driveTrain motors
-    rightMaster.setNeutralMode(mode);
-    rm2.setNeutralMode(mode);
-    rm3.setNeutralMode(mode);
-    leftMaster.setNeutralMode(mode);
-    lm2.setNeutralMode(mode);
-    lm3.setNeutralMode(mode);
+    m_rightMaster.setNeutralMode(mode);
+    m_rm2.setNeutralMode(mode);
+    m_rm3.setNeutralMode(mode);
+    m_leftMaster.setNeutralMode(mode);
+    m_lm2.setNeutralMode(mode);
+    m_lm3.setNeutralMode(mode);
   }
 
+  /**
+   * Call this whenever the robot selection changes.
+   */
+  public void setRobot() {
+    // right drivetrain TalonSRX PID
+    setupTalonPID(m_rightMaster, (1.0 + Constants.ROBOT.DRIVE_TURN_BIAS));
+    m_rightMaster.setSensorPhase(Constants.ROBOT.DRIVE_ENCODER_PHASE);
+    // left drivetrain TalonSRX PID
+    setupTalonPID(m_leftMaster, (1.0 - Constants.ROBOT.DRIVE_TURN_BIAS));
+    m_leftMaster.setSensorPhase(Constants.ROBOT.DRIVE_ENCODER_PHASE);
+  }
+
+  /**
+   * Call this to setup a TalonSRX PID for the drive of the robot.
+   *
+   * @param pidController
+   * @param biasMultiplier
+   */
+  private void setupTalonPID(TalonSRX pidController, double biasMultiplier) {
+    pidController.config_kF(0, Constants.ROBOT.DRIVE_Kf * biasMultiplier);
+    pidController.config_kP(0, Constants.ROBOT.DRIVE_Kp);
+    pidController.config_kI(0, Constants.ROBOT.DRIVE_Ki);
+    pidController.config_IntegralZone(0,
+        (int) (Constants.ROBOT.DRIVE_INTEGRAL_ZONE * Constants.ROBOT.DRIVE_MAX_RPM));
+    pidController.config_kD(0, 0);
+  }
+
+  /**
+   * @return Returns the right drive encoder position.
+   */
   public double getRightPosition() {
-    return rightMaster.getSelectedSensorPosition();
+    return m_rightMaster.getSelectedSensorPosition();
   }
 
+  /**
+   * @return Returns the left drive encoder position.
+   */
   public double getLeftPosition() {
-    return leftMaster.getSelectedSensorPosition();
+    return m_leftMaster.getSelectedSensorPosition();
   }
 
+  /**
+   * Reset the right and left encoder positions to 0.0.
+   */
   public void resetEncoders() {
-    rightMaster.setSelectedSensorPosition(0, 0, 10);
-    leftMaster.setSelectedSensorPosition(0, 0, 10);
+    m_rightMaster.setSelectedSensorPosition(0, 0, 10);
+    m_leftMaster.setSelectedSensorPosition(0, 0, 10);
   }
 
+  /**
+   * @return Returns the actual speed of the right drive.
+   */
   public double getRightSpeed() {
-    return rightMaster.getSelectedSensorVelocity();
+    return m_rightMaster.getSelectedSensorVelocity();
   }
 
+  /**
+   * @return Returns the actual speed of the left drive.
+   */
   public double getLeftSpeed() {
-    return leftMaster.getSelectedSensorVelocity();
+    return m_leftMaster.getSelectedSensorVelocity();
   }
 
+  /**
+   * @return Returns the last right drive target speed requested.
+   */
   public double getTargetRightSpeed() {
-    return targetRightSpeed;
+    return m_targetRightSpeed;
   }
 
+  /**
+   * @return Returns the last left drive target speed requested.
+   */
   public double getTargetLeftSpeed() {
-    return targetLeftSpeed;
+    return m_targetLeftSpeed;
   }
 
+  /**
+   *
+   */
   public void resetIntegral() {
-    rightMaster.setIntegralAccumulator(0);
-    leftMaster.setIntegralAccumulator(0);
+    m_rightMaster.setIntegralAccumulator(0);
+    m_leftMaster.setIntegralAccumulator(0);
   }
 }

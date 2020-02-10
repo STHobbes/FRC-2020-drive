@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Limelight;
-import frc.robot.Constants;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -21,18 +20,25 @@ import frc.robot.Constants;
  * project.
  */
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
 
+  private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
-  
   private Limelight m_limelight;
+//  private SendableChooser<Constants.Robots> robotChooser = new SendableChooser<>();
 
   private void dashboardTelemetry(int port, String key, double var) {
     SmartDashboard.putString(String.format("DB/String %d", port), String.format("%s: %4.3f", key, var));
   }
 
+  private void dashboardTelemetry(int port, String key, String var) {
+    SmartDashboard.putString(String.format("DB/String %d", port), String.format("%s: %s", key, var));
+  }
+
   private void useTelemetry() {
     // Drive Telemetry
+    dashboardTelemetry(0, "robot", Constants.ROBOT.ROBOT_NAME);
+    dashboardTelemetry(5, "driver", Constants.DRIVER.DRIVER_NAME);
+
     dashboardTelemetry(0, "target right", m_robotContainer.getDrive().getTargetRightSpeed());
     dashboardTelemetry(5, "target left", m_robotContainer.getDrive().getTargetLeftSpeed());
     dashboardTelemetry(1, "right speed", m_robotContainer.getDrive().getRightSpeed());
@@ -40,7 +46,6 @@ public class Robot extends TimedRobot {
     dashboardTelemetry(2, "right enc", m_robotContainer.getDrive().getRightPosition());
     dashboardTelemetry(7, "left enc", m_robotContainer.getDrive().getLeftPosition());
     dashboardTelemetry(3, "kP", Constants.DRIVE_KP);
-    dashboardTelemetry(8, "kI", Constants.DRIVE_KI);
     dashboardTelemetry(4, "kF", Constants.DRIVE_KF);
     dashboardTelemetry(9, "turn bias", Constants.DRIVE_TURN_BIAS);
   }
@@ -56,9 +61,15 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     // empty the telemetry display
     for (int i = 0; i < 10; i++) {
-      SmartDashboard.putString(String.format("DB/String %d",i), " ");
+      SmartDashboard.putString(String.format("DB/String %d", i), " ");
     }
+
     m_limelight = m_robotContainer.getLimelight();
+    m_limelight.setDriveCamera();
+
+//    robotChooser.setDefaultOption(Constants.Robots.COMPETITION_ROBOT.ROBOT_NAME, Constants.Robots.COMPETITION_ROBOT);
+//    robotChooser.addOption(Constants.Robots.PRACTICE_ROBOT.ROBOT_NAME, Constants.Robots.PRACTICE_ROBOT);
+//    SmartDashboard.putData("Robot Selection", robotChooser);
   }
 
   /**
@@ -83,6 +94,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+//    Constants.ROBOT = robotChooser.getSelected();
+//    m_robotContainer.resetRobot();
   }
 
   @Override
@@ -95,6 +108,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+//    Constants.ROBOT = robotChooser.getSelected();
+//    m_robotContainer.resetRobot();
+
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -112,6 +128,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+//    Constants.ROBOT = robotChooser.getSelected();
+//    m_robotContainer.resetRobot();
+
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -130,6 +149,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
+//    Constants.ROBOT = robotChooser.getSelected();
+//    m_robotContainer.resetRobot();
+
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
   }

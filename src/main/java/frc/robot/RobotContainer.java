@@ -9,11 +9,14 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.SweeperSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -24,6 +27,8 @@ import frc.robot.subsystems.Limelight;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+  private final ArmSubsystem m_armSubsystem = ArmSubsystem.getInstance();
+  private final SweeperSubsystem m_sweeperSubsystem = SweeperSubsystem.getInstance();
   private final Limelight m_limelight = new Limelight();
 
   // The driver station buttons
@@ -43,21 +48,31 @@ public class RobotContainer {
   private final JoystickButton m_button11 = new JoystickButton(this.m_stick, 11);
   private final JoystickButton m_button12 = new JoystickButton(this.m_stick, 12);
 
+  // - the xbox controller and buttons
+  private final XboxController m_xbox = new XboxController(1);
+  private final JoystickButton xboxA = new JoystickButton(m_xbox, 1);
+  private final JoystickButton xboxB = new JoystickButton(m_xbox, 2);
+  private final JoystickButton xboxX = new JoystickButton(m_xbox, 3);
+  private final JoystickButton xboxY = new JoystickButton(m_xbox, 4);
+
   // The robot's commands
   private final DriveCommand m_driveCommand = new DriveCommand(m_driveSubsystem, m_stick);
-
-  // Commands
+  private final RunSweeper m_runSweeper = new RunSweeper(m_sweeperSubsystem, m_stick);
+  private final ManualCollector m_manualCollector = new ManualCollector(m_armSubsystem, m_xbox);
   private final SetDriveCamera m_setDriveCamera = new SetDriveCamera(m_limelight);
   private final SetVisionCamera m_setVisionCamera = new SetVisionCamera(m_limelight);
-
 
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    // perform robot and driver initializations
+    m_driveSubsystem.setRobot();
     // Set the default commands for subsystems
     m_driveSubsystem.setDefaultCommand(m_driveCommand);
+    m_sweeperSubsystem.setDefaultCommand(m_runSweeper);
+    m_armSubsystem.setDefaultCommand(m_manualCollector);
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -76,8 +91,17 @@ public class RobotContainer {
     m_button10.whenPressed(new AdjustkP(0.01));
     m_button11.whenPressed(new AdjustkF(-0.002));
     m_button12.whenPressed(new AdjustkF(0.002));
+    xboxA.whenPressed(new SetNextRobot(this));
+    xboxB.whenPressed(new SetNextDriver(this));
   }
 
+  public void resetRobot() {
+    m_driveSubsystem.setRobot();
+  }
+
+  public void resetDriver() {
+
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
