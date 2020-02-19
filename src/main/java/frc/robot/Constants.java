@@ -18,7 +18,7 @@ package frc.robot;
 public final class Constants {
 
   // -----------------------------------------------------------------------------------------------------------------------------
-  // Driver Configurations
+  // Driver and Robot Configurations
   // -----------------------------------------------------------------------------------------------------------------------------
 
   public static Drivers DRIVER = Drivers.ADEN;
@@ -108,6 +108,24 @@ public final class Constants {
   public enum Robots {
     COMPETITION_ROBOT("competition", 0.0, 4.5, 2.5, 0.0, 0.0, 230.0, 0.05, 100.0, 3.0),
     PRACTICE_ROBOT("practice", 0.019, 4.5, 2.5, 0.0, 0.0, 230.0, 0.05, 100.0, 3.0);
+  // -----------------------------------------------------------------------------------------------------------------------------
+  // Robot Configurations
+  // -----------------------------------------------------------------------------------------------------------------------------
+  // We have a competition robot and a test robot. It is unclear which parts of the competition will be reproduced on the test
+  // robot. We do know that right now the test robot is available for driver practice and tuning. This is an enumeration of our
+  //  robots and the characteristics specific to each.
+  //
+  // - Tuning speed Drive tuning (using encoders and the Talon SRX PID control) - from 2019 summer sessions
+  //   - We have noted that each 2-speed 3-wheel drive has different characteristics (motor, assembly, drag, belt tensioning,
+  //     etc.) that gives them a different performance character.  The DRIVE_TURN_BIAS is the performance difference between
+  //     the left and right drive trains of the robot.
+  //   - Kf -
+  //   - Kp -
+  //   - Ki -
+  //   - integral_zone -
+  public enum Robots {
+    COMPETITION_ROBOT("competition", 0.009, true, 0.131, 0.09, 0.0, 0.0, 7800.0, 1781.87, 457.95),
+    PRACTICE_ROBOT("practice", 0.019, false, 4.5, 2.5, 0.0, 0.0, 230.0, 52.54, 13.5);
 
     // The robot configuration that is running.
     public final String ROBOT_NAME;
@@ -144,6 +162,33 @@ public final class Constants {
       DRIVE_ENC_TICS_PER_INCH = tics_per_inch;
       DRIVE_ENC_TICS_POER_DEGREE = tics_per_degree;
     }
+    // The robot configuration that is running.
+    public final String ROBOT_NAME;
+    // The setup of the drive PID for the Talon SRX
+    public final double DRIVE_TURN_BIAS;
+    public final boolean DRIVE_ENCODER_PHASE;
+    public final double DRIVE_Kf;
+    public final double DRIVE_Kp;
+    public final double DRIVE_Ki;
+    public final double DRIVE_INTEGRAL_ZONE;
+    public final double DRIVE_MAX_RPM;
+    // The encoder values for autonomous move some distance and turn some degrees.
+    public final double DRIVE_TICS_PER_INCH;
+    public final double DRIVE_TICS_PER_DEGREE;
+
+    Robots(String robotName, double bias, boolean encoderPhase, double Kf, double Kp, double Ki,
+           double integralZone, double maxRpm, double ticsPerInch, double ticsPerDegree) {
+      ROBOT_NAME = robotName;
+      DRIVE_TURN_BIAS = bias;
+      DRIVE_ENCODER_PHASE = encoderPhase;
+      DRIVE_Kf = Kf;
+      DRIVE_Kp = Kp;
+      DRIVE_Ki = Ki;
+      DRIVE_INTEGRAL_ZONE = integralZone;
+      DRIVE_MAX_RPM = maxRpm;
+      DRIVE_TICS_PER_INCH = ticsPerInch;
+      DRIVE_TICS_PER_DEGREE = ticsPerDegree;
+    }
 
     public static Robots getNextRobot(Robots robot) {
       int index = robot.ordinal();
@@ -154,9 +199,6 @@ public final class Constants {
     }
   }
 
-  // -----------------------------------------------------------------------------------------------------------------------------
-  // Physical Mappings - where are motors, pneumatics, sensors, and servos connected to the electronics
-  // -----------------------------------------------------------------------------------------------------------------------------
   public static final class MotorControllers {
     public static int
         DRIVE_RIGHT_MASTER = 1,
@@ -164,7 +206,9 @@ public final class Constants {
         DRIVE_RIGHT_SLAVE_2 = 3,
         DRIVE_LEFT_MASTER = 4,
         DRIVE_LEFT_SLAVE_1 = 5,
-        DRIVE_LEFT_SLAVE_2 = 6;
+        DRIVE_LEFT_SLAVE_2 = 6,
+        COLLECTOR_POSITION = 7,
+        COLLECTOR_SWEEPER = 8;
   }
 
   public static final class Pneumatics {
@@ -172,5 +216,7 @@ public final class Constants {
 
   }
 
+  // -----------------------------------------------------------------------------------------------------------------------------
+  // Tuning IMU control of direction (heading)
 
 }
