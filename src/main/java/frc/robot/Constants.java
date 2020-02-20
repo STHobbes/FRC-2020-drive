@@ -101,13 +101,6 @@ public final class Constants {
     }
   }
 
-  /**
-   * The enumeration of robots that we are running this code on. Each robot has different performance characteristics that
-   * we quantify in this enumeration.
-   */
-  public enum Robots {
-    COMPETITION_ROBOT("competition", 0.0, 4.5, 2.5, 0.0, 0.0, 230.0, 0.05, 100.0, 3.0),
-    PRACTICE_ROBOT("practice", 0.019, 4.5, 2.5, 0.0, 0.0, 230.0, 0.05, 100.0, 3.0);
   // -----------------------------------------------------------------------------------------------------------------------------
   // Robot Configurations
   // -----------------------------------------------------------------------------------------------------------------------------
@@ -124,44 +117,9 @@ public final class Constants {
   //   - Ki -
   //   - integral_zone -
   public enum Robots {
-    COMPETITION_ROBOT("competition", 0.009, true, 0.131, 0.09, 0.0, 0.0, 7800.0, 1781.87, 457.95),
-    PRACTICE_ROBOT("practice", 0.019, false, 4.5, 2.5, 0.0, 0.0, 230.0, 52.54, 13.5);
+    COMPETITION_ROBOT("competition", 0.009, true, 0.131, 0.09, 0.0, 0.0, 0.0, 7800.0, 1781.87, 457.95),
+    PRACTICE_ROBOT("practice", 0.019, false, 4.5, 2.5, 0.0, 0.0, 0.0, 230.0, 52.54, 13.5);
 
-    // The robot configuration that is running.
-    public final String ROBOT_NAME;
-    public final double DRIVE_TURN_BIAS;
-    // The
-    public final double DRIVE_Kf;
-    public final double DRIVE_Kp;
-    public final double DRIVE_Ki;
-    public final double DRIVE_INTEGRAL_ZONE;
-    public final double DRIVE_MAX_RPM;
-    public final double DRIVE_HEADING_Kp;
-    public final double DRIVE_ENC_TICS_PER_INCH;
-    public final double DRIVE_ENC_TICS_POER_DEGREE;
-
-    /**
-     * @param name          The name that will be displayed as the robot configuration.
-     * @param bias          The bias for trhis configuration
-     * @param Kf            The drive Kf for the PID controlling this robot.
-     * @param Kp            The drive Kp for the PID controlling this robot.
-     * @param Ki            The drive Ki for the PID controlling this robot, normally 0.0
-     * @param integral_zone The drive integral zone for the PID controlling this robot, normally 0.0
-     * @param max_rpm       The maximum wheel speed, RPM, for the drive.
-     */
-    Robots(String name, double bias, double Kf, double Kp, double Ki, double integral_zone, double max_rpm,
-           double heading_Kp, double tics_per_inch, double tics_per_degree) {
-      ROBOT_NAME = name;
-      DRIVE_TURN_BIAS = bias;
-      DRIVE_Kf = Kf;
-      DRIVE_Kp = Kp;
-      DRIVE_Ki = Ki;
-      DRIVE_INTEGRAL_ZONE = integral_zone;
-      DRIVE_MAX_RPM = max_rpm;
-      DRIVE_HEADING_Kp = heading_Kp;
-      DRIVE_ENC_TICS_PER_INCH = tics_per_inch;
-      DRIVE_ENC_TICS_POER_DEGREE = tics_per_degree;
-    }
     // The robot configuration that is running.
     public final String ROBOT_NAME;
     // The setup of the drive PID for the Talon SRX
@@ -172,12 +130,23 @@ public final class Constants {
     public final double DRIVE_Ki;
     public final double DRIVE_INTEGRAL_ZONE;
     public final double DRIVE_MAX_RPM;
+    public final double DRIVE_HEADING_Kp;
     // The encoder values for autonomous move some distance and turn some degrees.
     public final double DRIVE_TICS_PER_INCH;
     public final double DRIVE_TICS_PER_DEGREE;
 
+    /**
+     * @param robotName     The name that will be displayed as the robot configuration.
+     * @param bias          The bias for trhis configuration
+     * @param Kf            The drive Kf for the PID controlling this robot.
+     * @param Kp            The drive Kp for the PID controlling this robot.
+     * @param Ki            The drive Ki for the PID controlling this robot, normally 0.0
+     * @param headingKp     The Kp for NavX heading correction.
+     * @param integralZone  The drive integral zone for the PID controlling this robot, normally 0.0
+     * @param maxRpm        The maximum wheel speed, RPM, for the drive.
+     */
     Robots(String robotName, double bias, boolean encoderPhase, double Kf, double Kp, double Ki,
-           double integralZone, double maxRpm, double ticsPerInch, double ticsPerDegree) {
+           double headingKp, double integralZone, double maxRpm, double ticsPerInch, double ticsPerDegree) {
       ROBOT_NAME = robotName;
       DRIVE_TURN_BIAS = bias;
       DRIVE_ENCODER_PHASE = encoderPhase;
@@ -185,6 +154,7 @@ public final class Constants {
       DRIVE_Kp = Kp;
       DRIVE_Ki = Ki;
       DRIVE_INTEGRAL_ZONE = integralZone;
+      DRIVE_HEADING_Kp = headingKp;
       DRIVE_MAX_RPM = maxRpm;
       DRIVE_TICS_PER_INCH = ticsPerInch;
       DRIVE_TICS_PER_DEGREE = ticsPerDegree;
