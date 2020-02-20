@@ -11,6 +11,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.SweeperSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -19,9 +22,12 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
+
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  private Limelight m_limelight;
+//  private SendableChooser<Constants.Robots> robotChooser = new SendableChooser<>();
 
   /**
    * Display a double value on the smart dashboard telemetry panel.
@@ -95,6 +101,13 @@ public class Robot extends TimedRobot {
       SmartDashboard.putString(String.format("DB/String %d", i), " ");
     }
     NavX.getInstance().initializeHeadingAndNav();
+
+    m_limelight = m_robotContainer.getLimelight();
+    m_limelight.setDriveCamera();
+
+//    robotChooser.setDefaultOption(Constants.Robots.COMPETITION_ROBOT.ROBOT_NAME, Constants.Robots.COMPETITION_ROBOT);
+//    robotChooser.addOption(Constants.Robots.PRACTICE_ROBOT.ROBOT_NAME, Constants.Robots.PRACTICE_ROBOT);
+//    SmartDashboard.putData("Robot Selection", robotChooser);
   }
 
   /**
@@ -119,6 +132,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+//    Constants.ROBOT = robotChooser.getSelected();
+//    m_robotContainer.resetRobot();
   }
 
   @Override
@@ -130,6 +145,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+//    Constants.ROBOT = robotChooser.getSelected();
+//    m_robotContainer.resetRobot();
+
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -149,6 +167,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+//    Constants.ROBOT = robotChooser.getSelected();
+//    m_robotContainer.resetRobot();
+
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -168,6 +189,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
+//    Constants.ROBOT = robotChooser.getSelected();
+//    m_robotContainer.resetRobot();
+
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
   }
