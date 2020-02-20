@@ -86,7 +86,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    xboxA.whenPressed(new SetNextRobot(this));
+    //xboxA.whenPressed(new SetNextRobot(this));
     xboxB.whenPressed(new SetNextDriver(this));
   }
 

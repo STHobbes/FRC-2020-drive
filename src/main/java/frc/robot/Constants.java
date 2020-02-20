@@ -22,7 +22,7 @@ public final class Constants {
   // -----------------------------------------------------------------------------------------------------------------------------
 
   public static Drivers DRIVER = Drivers.ADEN;
-  public static Robots ROBOT = Robots.PRACTICE_ROBOT;
+  public static Robots ROBOT = Robots.COMPETITION_ROBOT;
 
   // -----------------------------------------------------------------------------------------------------------------------------
   // Robot Configurations

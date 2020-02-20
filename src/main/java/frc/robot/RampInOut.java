@@ -21,12 +21,13 @@ public class RampInOut {
    * @param pathEnd          (double) The start position on the path. This is typically encoder tics, potentiometer position, degrees,
    *                         or some other measure of position on a path
    * @param maxValue         (double) The maximum value that will be returned by this function in the range 0.0 to 1.0.
-   * @param accelerationMin  (double) The value that should be returned when the initial position is {@code pathStart}, in
+   * @param accelerationMin  (double) The value that should be returned when the position is {@code pathStart}, in
    *                         the range 0.0 to {@code maxValue}.
    * @param pathAcceleration (double) The distance along the path through which the value should accelerate from
    *                         {@code accelerationMin} to 1.0. If ({@code maxValue} < 1.0), then acceleration will stop when
    *                         {@code maxValue} is reached.
-   * @param decelerationMin  (double)
+   * @param decelerationMin  (double) The value that should be returned as the position approaches is {@code pathEnd}, in
+   *                         the range 0.0 to {@code maxValue}.
    * @param pathDeceleration (double) The distance along the path through which the value should decelerate from
    *                         1.0 to {@code decelerationMin}. If ({@code maxValue} < 1.0), then deceleration will start
    *                         when the deceleration value reaches {@code maxValue}.
@@ -51,29 +52,56 @@ public class RampInOut {
    */
   private double getValueAtPosition(double pathCurrent) {
     if (m_pathStart < m_pathEnd) {
-//      if (currentTics <= 0) {
-//        return accelMin;
-//      }
-//      if (currentTics >= targetTics) {
-//        return 0.0;
-//      }
-//      double mtrPower = maxPower;
-//      if (currentTics < accelTics) {
-//        double accelPower = accelMin + ((1 - accelMin) * (currentTics / accelTics));
-//        if (accelPower < mtrPower) {
-//          mtrPower = accelPower;
-//        }
-//      }
-//      if (currentTics > targetTics - decelTics) {
-//        double decelPower = decelMin + ((1 - decelMin) * ((targetTics - currentTics) / decelTics));
-//        if (decelPower < mtrPower) {
-//          mtrPower = decelPower;
-//        }
-//      }
-//      return mtrPower;
-      return 0.0;
+      // looking for the
+      if (pathCurrent <= m_pathStart) {
+        // behind the start, use the minimum
+        return m_accelerationMin;
+      }
+      if (pathCurrent >= m_pathEnd) {
+        // past the end, STOP.
+        return 0.0;
+      }
+      double pathValue = m_maxValue;
+      if (pathCurrent <= (m_pathStart + m_pathAcceleration)) {
+        // In the ramp up zone
+        double accelValue = m_accelerationMin + ((1 - m_accelerationMin) * ((pathCurrent - m_pathStart) / m_pathAcceleration));
+        if (accelValue < pathValue) {
+          pathValue = accelValue;
+        }
+      }
+      if (pathCurrent > (m_pathEnd - m_pathDeceleration)) {
+        // In the ramp down zone
+        double decelValue = m_decelerationMin + ((1 - m_decelerationMin) * ((m_pathEnd - pathCurrent) / m_pathAcceleration));
+        if (decelValue < pathValue) {
+          pathValue = decelValue;
+        }
+      }
+      return pathValue;
     } else if (m_pathStart > m_pathEnd) {
-      return 0.0;
+      if (pathCurrent >= m_pathStart) {
+        // behind the start, use the minimum
+        return m_accelerationMin;
+      }
+      if (pathCurrent <= m_pathEnd) {
+        // past the end, STOP.
+        return 0.0;
+      }
+      double pathValue = m_maxValue;
+      if (pathCurrent >= (m_pathStart - m_pathAcceleration)) {
+        // In the ramp up zone
+        double accelValue = m_accelerationMin + ((1 - m_accelerationMin) * ((m_pathStart - pathCurrent) / m_pathAcceleration));
+        if (accelValue < pathValue) {
+          pathValue = accelValue;
+        }
+      }
+      if (pathCurrent > (m_pathEnd - m_pathDeceleration)) {
+        // In the ramp down zone
+        double decelValue = m_decelerationMin + ((1 - m_decelerationMin) * ((pathCurrent - m_pathEnd) / m_pathAcceleration));
+        if (decelValue < pathValue) {
+          pathValue = decelValue;
+        }
+      }
+      return pathValue;
     }
     return 0.0;
   }
