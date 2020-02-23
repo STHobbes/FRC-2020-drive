@@ -94,7 +94,7 @@ public class RampInOut {
           pathValue = accelValue;
         }
       }
-      if (pathCurrent > (m_pathEnd - m_pathDeceleration)) {
+      if (pathCurrent < (m_pathEnd + m_pathDeceleration)) {
         // In the ramp down zone
         double decelValue = m_decelerationMin + ((1 - m_decelerationMin) * ((pathCurrent - m_pathEnd) / m_pathAcceleration));
         if (decelValue < pathValue) {
