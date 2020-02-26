@@ -77,9 +77,9 @@ public class Robot extends TimedRobot {
     dashboardTelemetry(5, "driver", Constants.DRIVER.DRIVER_NAME);
 
     NavX.NavInfo navInfo = NavX.getInstance().getNavInfo();
-    dashboardTelemetry(2, "pitch", navInfo.pitch);
-    dashboardTelemetry(3, "yaw", navInfo.yaw);
-    dashboardTelemetry(4, "roll", navInfo.roll);
+    dashboardTelemetry(2, "pitch", navInfo.rawPitch);
+    dashboardTelemetry(3, "yaw", navInfo.rawYaw);
+    dashboardTelemetry(4, "roll", navInfo.rawRoll);
 
     NavX.HeadingInfo headinnInfo = NavX.getInstance().getHeadingInfo();
     dashboardTelemetry(8, "expected:", headinnInfo.expectedHeading);
